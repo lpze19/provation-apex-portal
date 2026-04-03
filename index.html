@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Provation Apex | Clinical Workflow Portal — DHR Health</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <img src="https://www.dhrhealth.com/media/gwnhldr2/dhr-logo.png" alt="DHR Health" class="logo-img" />
+        <span class="nav-divider"></span>
+        <span class="nav-title">Provation Apex Portal</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#workflow">Workflow</a></li>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#resources">Resources</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Clinical Documentation System</div>
+      <h1 class="hero-title">Provation Apex<br /><span class="hero-accent">Clinical Workflow Portal</span></h1>
+      <p class="hero-sub">A comprehensive guide to the Provation Apex endoscopy documentation platform at DHR Health — from patient admission to final chart documentation.</p>
+      <div class="hero-actions">
+        <a href="#workflow" class="btn-primary">Explore Workflow</a>
+        <a href="#resources" class="btn-ghost">View Resources</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-card-icon">⚕</div>
+        <div class="hero-card-stat" data-count="16" data-suffix="">0</div>
+        <div class="hero-card-label">Workflow Steps</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-icon">📋</div>
+        <div class="hero-card-stat" data-count="100" data-suffix="%">0%</div>
+        <div class="hero-card-label">Auto-Documentation</div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-icon">🔒</div>
+        <div class="hero-card-stat">HL7</div>
+        <div class="hero-card-label">ADT Integration</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OVERVIEW -->
+  <section class="section" id="overview">
+    <div class="container">
+      <div class="section-label">What is Provation Apex?</div>
+      <h2 class="section-title">Endoscopy Documentation,<br />Reimagined for DHR Health</h2>
+      <p class="section-desc">Provation Apex is DHR Health's enterprise endoscopy reporting and documentation platform. It integrates directly with the EMR, enabling real-time procedure documentation, automatic charge capture, and seamless patient record completion — from the moment a case opens to the physician's final signature.</p>
+      <div class="overview-cards">
+        <div class="ov-card">
+          <div class="ov-icon">🏥</div>
+          <h3>EMR Integration</h3>
+          <p>Patient data flows automatically from registration through ADT/HL7 interfaces — no manual entry required.</p>
+        </div>
+        <div class="ov-card">
+          <div class="ov-icon">📸</div>
+          <h3>Image Capture</h3>
+          <p>Scope images are captured directly into the case record the moment the scope and physician are assigned.</p>
+        </div>
+        <div class="ov-card">
+          <div class="ov-icon">✍️</div>
+          <h3>Physician Signature</h3>
+          <p>Physicians sign cases electronically. The completed document is automatically sent to the patient's chart.</p>
+        </div>
+        <div class="ov-card">
+          <div class="ov-icon">💰</div>
+          <h3>Charge Capture</h3>
+          <p>Procedure charges are captured within the workflow, reducing billing lag and documentation gaps.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORKFLOW -->
+  <section class="section section-dark" id="workflow">
+    <div class="container">
+      <div class="section-label light">Clinical Workflow</div>
+      <h2 class="section-title light">From Admission to Chart</h2>
+      <p class="section-desc light">Click any step to explore what happens at each stage of the Provation Apex clinical workflow.</p>
+      <div class="workflow-container">
+        <div class="workflow-track" id="workflowTrack"></div>
+      </div>
+      <div class="workflow-detail" id="workflowDetail">
+        <div class="detail-placeholder">
+          <span>👆</span>
+          <p>Select a workflow step above to see details</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCHITECTURE -->
+  <section class="section" id="architecture">
+    <div class="container">
+      <div class="section-label">System Architecture</div>
+      <h2 class="section-title">How Provation Apex Connects</h2>
+      <p class="section-desc">Provation Apex sits at the center of DHR Health's endoscopy ecosystem, integrating with scheduling, EMR, imaging, and billing systems through industry-standard interfaces.</p>
+      <div class="arch-diagram">
+        <div class="arch-center">
+          <div class="arch-core">Provation<br/>Apex</div>
+        </div>
+        <div class="arch-nodes">
+          <div class="arch-node" style="--angle: 0deg">
+            <div class="arch-node-box">EMR / ADT<br/><span>HL7 Interface</span></div>
+          </div>
+          <div class="arch-node" style="--angle: 60deg">
+            <div class="arch-node-box">Scheduling<br/><span>SIU Messages</span></div>
+          </div>
+          <div class="arch-node" style="--angle: 120deg">
+            <div class="arch-node-box">Olympus / Pentax<br/><span>Scope Imaging</span></div>
+          </div>
+          <div class="arch-node" style="--angle: 180deg">
+            <div class="arch-node-box">Label Printers<br/><span>Specimen Labels</span></div>
+          </div>
+          <div class="arch-node" style="--angle: 240deg">
+            <div class="arch-node-box">Azure AD<br/><span>Authentication</span></div>
+          </div>
+          <div class="arch-node" style="--angle: 300deg">
+            <div class="arch-node-box">Charge Capture<br/><span>Billing Export</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="arch-specs">
+        <div class="spec-item">
+          <div class="spec-label">Authentication</div>
+          <div class="spec-value">Azure Active Directory (SSO)</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">ADT Interface</div>
+          <div class="spec-value">HL7 v2.x — Admit, Discharge, Transfer</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">Scheduling</div>
+          <div class="spec-value">SIU Message Specification</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">Offline Mode</div>
+          <div class="spec-value">Supported — local cache with sync</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">Imaging</div>
+          <div class="spec-value">Olympus CV-180/190, Pentax IMAGINA</div>
+        </div>
+        <div class="spec-item">
+          <div class="spec-label">Security</div>
+          <div class="spec-value">Cybersecurity certified — see fact sheet</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESOURCES -->
+  <section class="section section-alt" id="resources">
+    <div class="container">
+      <div class="section-label">Documentation</div>
+      <h2 class="section-title">Resources & References</h2>
+      <p class="section-desc">All supporting documentation organized by category.</p>
+      <div class="resources-grid" id="resourcesGrid"></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <img src="https://www.dhrhealth.com/media/gwnhldr2/dhr-logo.png" alt="DHR Health" />
+      </div>
+      <div class="footer-text">
+        <p>Doctors Hospital at Renaissance — Information Technology</p>
+        <p class="footer-sub">Provation Apex Clinical Workflow Portal · Confidential Internal Use</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
