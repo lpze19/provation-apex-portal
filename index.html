@@ -17,18 +17,92 @@
         <span class="nav-divider"></span>
         <span class="nav-title">Provation Apex Portal</span>
       </div>
-      <ul class="nav-links">
-        <li><a href="#overview">Overview</a></li>
-        <li><a href="#workflow">Workflow</a></li>
-        <li><a href="#architecture">Architecture</a></li>
-        <li><a href="#resources">Resources</a></li>
-      </ul>
     </div>
   </nav>
 
+  <!-- SCROLL PROGRESS -->
+  <div class="scroll-progress"><div class="scroll-progress-bar" id="scrollBar"></div></div>
+
+  <!-- COMMAND PALETTE -->
+  <div class="cmd-overlay" id="cmdOverlay" role="dialog" aria-modal="true" aria-label="Command palette">
+    <div class="cmd-box">
+      <div class="cmd-input-wrap">
+        <span class="cmd-icon">⌘</span>
+        <input type="text" id="cmdInput" placeholder="Search sections, workflow steps, resources…" autocomplete="off" />
+        <span class="cmd-hint">ESC to close</span>
+      </div>
+      <div class="cmd-results" id="cmdResults"></div>
+      <div class="cmd-footer">
+        <span><kbd>↑↓</kbd> navigate</span>
+        <span><kbd>↵</kbd> go</span>
+        <span><kbd>ESC</kbd> close</span>
+      </div>
+    </div>
+  </div>
+  <button class="cmd-trigger" id="cmdTrigger" aria-label="Open command palette">
+    <span>⌘</span> Quick Nav <kbd>Ctrl K</kbd>
+  </button>
+
+  <!-- SIDE NAV -->
+  <nav class="sidenav" id="sidenav">
+    <ul class="sidenav-links">
+      <li class="sidenav-group">
+        <a href="#overview" class="sidenav-link sidenav-parent" data-section="overview"><span class="sidenav-dot"></span><span class="sidenav-label">Overview</span></a>
+      </li>
+      <li class="sidenav-group">
+        <a href="#clinical-workflow" class="sidenav-link sidenav-parent" data-section="clinical-workflow"><span class="sidenav-dot"></span><span class="sidenav-label">Clinical Workflow</span></a>
+        <ul class="sidenav-sub">
+          <li><a href="#cw-admission" class="sidenav-link sidenav-child" data-section="cw-admission"><span class="sidenav-dot"></span><span class="sidenav-label">Admission</span></a></li>
+          <li><a href="#cw-scheduling" class="sidenav-link sidenav-child" data-section="cw-scheduling"><span class="sidenav-dot"></span><span class="sidenav-label">Scheduling</span></a></li>
+          <li><a href="#cw-orders" class="sidenav-link sidenav-child" data-section="cw-orders"><span class="sidenav-dot"></span><span class="sidenav-label">Orders</span></a></li>
+          <li><a href="#cw-charting" class="sidenav-link sidenav-child" data-section="cw-charting"><span class="sidenav-dot"></span><span class="sidenav-label">Charting</span></a></li>
+          <li><a href="#cw-physician-note" class="sidenav-link sidenav-child" data-section="cw-physician-note"><span class="sidenav-dot"></span><span class="sidenav-label">Physician Note</span></a></li>
+          <li><a href="#cw-charges" class="sidenav-link sidenav-child" data-section="cw-charges"><span class="sidenav-dot"></span><span class="sidenav-label">Charges</span></a></li>
+          <li><a href="#cw-transfer" class="sidenav-link sidenav-child" data-section="cw-transfer"><span class="sidenav-dot"></span><span class="sidenav-label">Transfer</span></a></li>
+          <li><a href="#cw-discharge" class="sidenav-link sidenav-child" data-section="cw-discharge"><span class="sidenav-dot"></span><span class="sidenav-label">Discharge</span></a></li>
+        </ul>
+      </li>
+      <li class="sidenav-group">
+        <a href="#contacts" class="sidenav-link sidenav-parent" data-section="contacts"><span class="sidenav-dot"></span><span class="sidenav-label">Contacts</span></a>
+        <ul class="sidenav-sub">
+          <li><a href="#ct-departments" class="sidenav-link sidenav-child" data-section="ct-departments"><span class="sidenav-dot"></span><span class="sidenav-label">Departments</span></a></li>
+          <li><a href="#ct-leadership" class="sidenav-link sidenav-child" data-section="ct-leadership"><span class="sidenav-dot"></span><span class="sidenav-label">Leadership</span></a></li>
+          <li><a href="#ct-powerusers" class="sidenav-link sidenav-child" data-section="ct-powerusers"><span class="sidenav-dot"></span><span class="sidenav-label">Power Users</span></a></li>
+          <li><a href="#ct-support" class="sidenav-link sidenav-child" data-section="ct-support"><span class="sidenav-dot"></span><span class="sidenav-label">Support</span></a></li>
+        </ul>
+      </li>
+      <li class="sidenav-group">
+        <a href="#functional-specs" class="sidenav-link sidenav-parent" data-section="functional-specs"><span class="sidenav-dot"></span><span class="sidenav-label">Functional Specs</span></a>
+        <ul class="sidenav-sub">
+          <li><a href="#fs-purpose" class="sidenav-link sidenav-child" data-section="fs-purpose"><span class="sidenav-dot"></span><span class="sidenav-label">Purpose</span></a></li>
+          <li><a href="#fs-features" class="sidenav-link sidenav-child" data-section="fs-features"><span class="sidenav-dot"></span><span class="sidenav-label">Features</span></a></li>
+          <li><a href="#fs-appworkflow" class="sidenav-link sidenav-child" data-section="fs-appworkflow"><span class="sidenav-dot"></span><span class="sidenav-label">App Workflow</span></a></li>
+          <li><a href="#fs-testing" class="sidenav-link sidenav-child" data-section="fs-testing"><span class="sidenav-dot"></span><span class="sidenav-label">Testing & SOPs</span></a></li>
+        </ul>
+      </li>
+      <li class="sidenav-group">
+        <a href="#technical-specs" class="sidenav-link sidenav-parent" data-section="technical-specs"><span class="sidenav-dot"></span><span class="sidenav-label">Technical Specs</span></a>
+        <ul class="sidenav-sub">
+          <li><a href="#ts-infrastructure" class="sidenav-link sidenav-child" data-section="ts-infrastructure"><span class="sidenav-dot"></span><span class="sidenav-label">Infrastructure</span></a></li>
+          <li><a href="#ts-interfaces" class="sidenav-link sidenav-child" data-section="ts-interfaces"><span class="sidenav-dot"></span><span class="sidenav-label">Interfaces</span></a></li>
+          <li><a href="#ts-security" class="sidenav-link sidenav-child" data-section="ts-security"><span class="sidenav-dot"></span><span class="sidenav-label">Security</span></a></li>
+          <li><a href="#ts-auth" class="sidenav-link sidenav-child" data-section="ts-auth"><span class="sidenav-dot"></span><span class="sidenav-label">Authentication</span></a></li>
+        </ul>
+      </li>
+      <li class="sidenav-group">
+        <a href="#architecture" class="sidenav-link sidenav-parent" data-section="architecture"><span class="sidenav-dot"></span><span class="sidenav-label">Architecture</span></a>
+      </li>
+      <li class="sidenav-group">
+        <a href="#resources" class="sidenav-link sidenav-parent" data-section="resources"><span class="sidenav-dot"></span><span class="sidenav-label">Resources</span></a>
+      </li>
+    </ul>
+  </nav>
+
   <!-- HERO -->
-  <section class="hero">
+  <section class="hero parallax-section" id="hero" data-parallax="0.4">
     <div class="hero-bg-grid"></div>
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
     <div class="hero-content">
       <div class="hero-badge">Clinical Documentation System</div>
       <h1 class="hero-title">Provation Apex<br /><span class="hero-accent">Clinical Workflow Portal</span></h1>
@@ -58,11 +132,11 @@
   </section>
 
   <!-- OVERVIEW -->
-  <section class="section" id="overview">
+  <section class="section parallax-section" id="overview" data-parallax="0.25">
     <div class="container">
-      <div class="section-label">What is Provation Apex?</div>
-      <h2 class="section-title">Endoscopy Documentation,<br />Reimagined for DHR Health</h2>
-      <p class="section-desc">Provation Apex is DHR Health's enterprise endoscopy reporting and documentation platform. It integrates directly with the EMR, enabling real-time procedure documentation, automatic charge capture, and seamless patient record completion — from the moment a case opens to the physician's final signature.</p>
+      <div class="section-label reveal">What is Provation Apex?</div>
+      <h2 class="section-title reveal">Endoscopy Documentation,<br />Reimagined for DHR Health</h2>
+      <p class="section-desc reveal">Provation Apex is DHR Health's enterprise endoscopy reporting and documentation platform. It integrates directly with the EMR, enabling real-time procedure documentation, automatic charge capture, and seamless patient record completion — from the moment a case opens to the physician's final signature.</p>
       <div class="overview-cards">
         <div class="ov-card">
           <div class="ov-icon">🏥</div>
@@ -88,12 +162,12 @@
     </div>
   </section>
 
-  <!-- WORKFLOW -->
-  <section class="section section-dark" id="workflow">
+  <!-- WORKFLOW (interactive steps) -->
+  <section class="section section-dark parallax-section" id="workflow" data-parallax="0.2">
     <div class="container">
-      <div class="section-label light">Clinical Workflow</div>
-      <h2 class="section-title light">From Admission to Chart</h2>
-      <p class="section-desc light">Click any step to explore what happens at each stage of the Provation Apex clinical workflow.</p>
+      <div class="section-label light reveal">Clinical Workflow</div>
+      <h2 class="section-title light reveal">From Admission to Chart</h2>
+      <p class="section-desc light reveal">Click any step to explore what happens at each stage of the Provation Apex clinical workflow.</p>
       <div class="workflow-container">
         <div class="workflow-track" id="workflowTrack"></div>
       </div>
@@ -107,11 +181,11 @@
   </section>
 
   <!-- ARCHITECTURE -->
-  <section class="section" id="architecture">
+  <section class="section parallax-section" id="architecture" data-parallax="0.2">
     <div class="container">
-      <div class="section-label">System Architecture</div>
-      <h2 class="section-title">How Provation Apex Connects</h2>
-      <p class="section-desc">Provation Apex sits at the center of DHR Health's endoscopy ecosystem, integrating with scheduling, EMR, imaging, and billing systems through industry-standard interfaces.</p>
+      <div class="section-label reveal">System Architecture</div>
+      <h2 class="section-title reveal">How Provation Apex Connects</h2>
+      <p class="section-desc reveal">Provation Apex sits at the center of DHR Health's endoscopy ecosystem, integrating with scheduling, EMR, imaging, and billing systems through industry-standard interfaces.</p>
       <div class="arch-diagram">
         <div class="arch-center">
           <div class="arch-core">Provation<br/>Apex</div>
@@ -166,12 +240,751 @@
     </div>
   </section>
 
-  <!-- RESOURCES -->
-  <section class="section section-alt" id="resources">
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 1 — CLINICAL WORKFLOW DOCUMENTATION
+  ═══════════════════════════════════════════════════════ -->
+  <section class="section section-dark parallax-section doc-section" id="clinical-workflow" data-parallax="0.15">
     <div class="container">
-      <div class="section-label">Documentation</div>
-      <h2 class="section-title">Resources & References</h2>
-      <p class="section-desc">All supporting documentation organized by category.</p>
+      <div class="section-label light reveal">Section 1</div>
+      <h2 class="section-title light reveal">Clinical Workflow Documentation</h2>
+      <p class="section-desc light reveal">End-to-end documentation of every clinical phase — from the moment a patient arrives to final discharge.</p>
+      <div class="doc-nav-grid reveal">
+        <a href="#cw-admission" class="doc-nav-card"><span>🏥</span><span>Admission / Registration</span></a>
+        <a href="#cw-scheduling" class="doc-nav-card"><span>📅</span><span>Scheduling</span></a>
+        <a href="#cw-orders" class="doc-nav-card"><span>📋</span><span>Orders</span></a>
+        <a href="#cw-charting" class="doc-nav-card"><span>✏️</span><span>Charting</span></a>
+        <a href="#cw-physician-note" class="doc-nav-card"><span>👨‍⚕️</span><span>Physician Note</span></a>
+        <a href="#cw-charges" class="doc-nav-card"><span>💰</span><span>Charges</span></a>
+        <a href="#cw-transfer" class="doc-nav-card"><span>🔄</span><span>Transfer</span></a>
+        <a href="#cw-discharge" class="doc-nav-card"><span>🚪</span><span>Discharge</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section parallax-section doc-subsection" id="cw-admission" data-parallax="0.1">
+    <div class="container">
+      <div class="doc-subsection-header reveal">
+        <div class="doc-sub-num">1a</div>
+        <div><div class="section-label">Clinical Workflow</div><h2 class="section-title">Admission / Registration</h2></div>
+      </div>
+      <div class="doc-content-grid">
+        <div class="doc-content-main reveal">
+          <p>The admission and registration process is the entry point for all Provation Apex cases. Patient identity is confirmed, demographics are verified, and the encounter is created in the EMR. ADT HL7 messages automatically populate Provation Apex — eliminating duplicate data entry.</p>
+          <div class="doc-steps">
+            <div class="doc-step reveal"><div class="doc-step-num">01</div><div><strong>Patient Arrival</strong><p>Front desk confirms patient identity, verifies insurance, and initiates pre-registration in the scheduling system.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">02</div><div><strong>ADT Message Triggered</strong><p>An HL7 ADT (Admit/Discharge/Transfer) message is generated and transmitted to Provation Apex via the interface engine.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">03</div><div><strong>Case Pre-Population</strong><p>Provation Apex receives the ADT message and pre-populates the case with patient demographics, MRN, encounter number, and procedure details.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">04</div><div><strong>Registration Confirmation</strong><p>Clinical staff confirms the case in Provation Apex, verifying all pre-populated data before the patient enters the procedure area.</p></div></div>
+          </div>
+        </div>
+        <div class="doc-content-aside">
+          <div class="doc-info-card reveal">
+            <div class="doc-info-title">Key Interface</div>
+            <div class="doc-info-value">HL7 ADT v2.x</div>
+          </div>
+          <div class="doc-info-card reveal">
+            <div class="doc-info-title">Trigger Event</div>
+            <div class="doc-info-value">A01 — Admit Patient</div>
+          </div>
+          <div class="doc-info-card reveal">
+            <div class="doc-info-title">Data Populated</div>
+            <div class="doc-info-value">MRN, Name, DOB, Insurance, Encounter #</div>
+          </div>
+          <div class="doc-info-card reveal">
+            <div class="doc-info-title">Manual Entry Required</div>
+            <div class="doc-info-value">None — fully automated via interface</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt parallax-section doc-subsection" id="cw-scheduling" data-parallax="0.1">
+    <div class="container">
+      <div class="doc-subsection-header reveal">
+        <div class="doc-sub-num">1b</div>
+        <div><div class="section-label">Clinical Workflow</div><h2 class="section-title">Scheduling</h2></div>
+      </div>
+      <div class="doc-content-grid">
+        <div class="doc-content-main reveal">
+          <p>Procedure scheduling is managed through the hospital scheduling system and communicated to Provation Apex via SIU (Schedule Information Unsolicited) HL7 messages. This ensures the procedure list in Provation Apex always reflects the current schedule without manual synchronization.</p>
+          <div class="doc-steps">
+            <div class="doc-step reveal"><div class="doc-step-num">01</div><div><strong>Procedure Scheduled</strong><p>Scheduler books the procedure in the hospital scheduling system, selecting procedure type, physician, room, and time slot.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">02</div><div><strong>SIU Message Sent</strong><p>An SIU S12 (New Appointment) message is transmitted to Provation Apex, creating a pending case in the worklist.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">03</div><div><strong>Worklist Updated</strong><p>The case appears in the Provation Apex daily worklist, visible to clinical staff and the assigned physician.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">04</div><div><strong>Schedule Changes</strong><p>Cancellations and reschedules trigger SIU S15/S16 messages, automatically updating or removing the case from the worklist.</p></div></div>
+          </div>
+        </div>
+        <div class="doc-content-aside">
+          <div class="doc-info-card reveal"><div class="doc-info-title">Interface Type</div><div class="doc-info-value">HL7 SIU v2.x</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Message Events</div><div class="doc-info-value">S12 New · S13 Reschedule · S15 Cancel</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Worklist Visibility</div><div class="doc-info-value">Real-time — no manual refresh needed</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Scheduling System</div><div class="doc-info-value">Hospital Scheduling / EMR</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section parallax-section doc-subsection" id="cw-orders" data-parallax="0.1">
+    <div class="container">
+      <div class="doc-subsection-header reveal">
+        <div class="doc-sub-num">1c</div>
+        <div><div class="section-label">Clinical Workflow</div><h2 class="section-title">Orders</h2></div>
+      </div>
+      <div class="doc-content-grid">
+        <div class="doc-content-main reveal">
+          <p>Procedure orders originate in the EMR and are transmitted to Provation Apex via HL7 ORM messages. Orders define the procedure type, clinical indications, and any special instructions — forming the clinical basis for the Provation Apex case documentation.</p>
+          <div class="doc-steps">
+            <div class="doc-step reveal"><div class="doc-step-num">01</div><div><strong>Order Placed in EMR</strong><p>Physician places a procedure order in the EMR (e.g., colonoscopy, upper endoscopy). The order includes diagnosis codes, clinical indications, and urgency.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">02</div><div><strong>ORM Message Transmitted</strong><p>An HL7 ORM O01 message is sent to Provation Apex, linking the order to the scheduled case.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">03</div><div><strong>Case Enrichment</strong><p>Provation Apex populates the case with procedure codes, indications, and clinical context from the order — pre-filling documentation templates.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">04</div><div><strong>Order Acknowledgment</strong><p>Provation Apex sends an ORR acknowledgment back to the EMR confirming receipt and case linkage.</p></div></div>
+          </div>
+        </div>
+        <div class="doc-content-aside">
+          <div class="doc-info-card reveal"><div class="doc-info-title">Interface Type</div><div class="doc-info-value">HL7 ORM v2.x</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Message Event</div><div class="doc-info-value">O01 — General Order</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Data Included</div><div class="doc-info-value">CPT codes, ICD-10, Indications, Urgency</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Acknowledgment</div><div class="doc-info-value">ORR — Order Response</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt parallax-section doc-subsection" id="cw-charting" data-parallax="0.1">
+    <div class="container">
+      <div class="doc-subsection-header reveal">
+        <div class="doc-sub-num">1d</div>
+        <div><div class="section-label">Clinical Workflow</div><h2 class="section-title">Charting / Documentation</h2></div>
+      </div>
+      <div class="doc-content-grid">
+        <div class="doc-content-main reveal">
+          <p>Real-time charting occurs throughout the procedure. Provation Apex provides structured documentation templates for each anatomical section, capturing findings, images, measurements, and clinical observations as the procedure progresses.</p>
+          <div class="doc-steps">
+            <div class="doc-step reveal"><div class="doc-step-num">01</div><div><strong>Case Opened</strong><p>Clinical staff opens the case in Provation Apex. The structured documentation template loads based on the procedure type.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">02</div><div><strong>Real-Time Image Capture</strong><p>Scope images are captured directly into the case record via the Olympus or Pentax imaging interface. Images are automatically tagged to the current anatomical section.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">03</div><div><strong>Findings Documentation</strong><p>Clinical staff documents findings at each anatomical section using structured templates — polyp size, location, morphology, interventions performed.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">04</div><div><strong>Specimen Labels</strong><p>If specimens are collected, Provation Apex generates specimen labels with patient ID, collection site, and procedure details for pathology submission.</p></div></div>
+          </div>
+        </div>
+        <div class="doc-content-aside">
+          <div class="doc-info-card reveal"><div class="doc-info-title">Template Type</div><div class="doc-info-value">Structured — procedure-specific</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Image Systems</div><div class="doc-info-value">Olympus CV-180/190, Pentax IMAGINA</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Specimen Labels</div><div class="doc-info-value">Auto-generated with pathology data</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Offline Support</div><div class="doc-info-value">Yes — local cache with sync on reconnect</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section parallax-section doc-subsection" id="cw-physician-note" data-parallax="0.1">
+    <div class="container">
+      <div class="doc-subsection-header reveal">
+        <div class="doc-sub-num">1e</div>
+        <div><div class="section-label">Clinical Workflow</div><h2 class="section-title">Physician Note</h2></div>
+      </div>
+      <div class="doc-content-grid">
+        <div class="doc-content-main reveal">
+          <p>The physician note is the clinical narrative of the procedure — findings, impressions, recommendations, and follow-up instructions. Provation Apex auto-generates a structured note from the documented data, which the physician reviews and finalizes before signing.</p>
+          <div class="doc-steps">
+            <div class="doc-step reveal"><div class="doc-step-num">01</div><div><strong>Auto-Generated Draft</strong><p>Upon scope withdrawal, Provation Apex assembles a structured procedure note from all documented findings, images, and interventions.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">02</div><div><strong>Physician Review</strong><p>The physician reviews the auto-generated note, adding impressions, recommendations, follow-up instructions, and any additional clinical narrative.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">03</div><div><strong>Note Finalization</strong><p>The physician finalizes the note content. At this stage the note is complete but not yet legally signed.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">04</div><div><strong>Electronic Signature</strong><p>The physician applies their electronic signature. The note is timestamped, locked, and transmitted to the EMR chart automatically.</p></div></div>
+          </div>
+        </div>
+        <div class="doc-content-aside">
+          <div class="doc-info-card reveal"><div class="doc-info-title">Note Generation</div><div class="doc-info-value">Auto-assembled from structured data</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Signature Type</div><div class="doc-info-value">Electronic — credential-bound</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Post-Signature</div><div class="doc-info-value">Locked — no alterations permitted</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Distribution</div><div class="doc-info-value">Auto-sent to EMR chart via ORU message</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt parallax-section doc-subsection" id="cw-charges" data-parallax="0.1">
+    <div class="container">
+      <div class="doc-subsection-header reveal">
+        <div class="doc-sub-num">1f</div>
+        <div><div class="section-label">Clinical Workflow</div><h2 class="section-title">Charges</h2></div>
+      </div>
+      <div class="doc-content-grid">
+        <div class="doc-content-main reveal">
+          <p>Charge capture is embedded in the Provation Apex documentation workflow. Procedure codes are automatically suggested based on documented findings and interventions, reducing billing lag and ensuring accurate charge submission.</p>
+          <div class="doc-steps">
+            <div class="doc-step reveal"><div class="doc-step-num">01</div><div><strong>Auto-Suggested Codes</strong><p>Based on documented procedures and findings, Provation Apex suggests CPT and ICD-10 codes for the encounter.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">02</div><div><strong>Clinical Review</strong><p>Clinical staff or the physician reviews and confirms the suggested codes, adding or modifying as clinically appropriate.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">03</div><div><strong>Charge Submission</strong><p>Upon case completion, charges are exported to the billing system via the configured interface, eliminating manual charge entry.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">04</div><div><strong>Audit Trail</strong><p>All charge activity is logged with timestamps and user credentials, providing a complete audit trail for compliance and billing review.</p></div></div>
+          </div>
+        </div>
+        <div class="doc-content-aside">
+          <div class="doc-info-card reveal"><div class="doc-info-title">Code Types</div><div class="doc-info-value">CPT, ICD-10-CM, HCPCS</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Trigger</div><div class="doc-info-value">Case completion / physician signature</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Export Method</div><div class="doc-info-value">Billing interface / HL7 DFT</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Audit Log</div><div class="doc-info-value">Full — user, timestamp, code history</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section parallax-section doc-subsection" id="cw-transfer" data-parallax="0.1">
+    <div class="container">
+      <div class="doc-subsection-header reveal">
+        <div class="doc-sub-num">1g</div>
+        <div><div class="section-label">Clinical Workflow</div><h2 class="section-title">Transfer</h2></div>
+      </div>
+      <div class="doc-content-grid">
+        <div class="doc-content-main reveal">
+          <p>Patient transfers — between units, rooms, or facilities — are communicated to Provation Apex via ADT A02 transfer messages. The case record is updated automatically to reflect the patient's new location and care team.</p>
+          <div class="doc-steps">
+            <div class="doc-step reveal"><div class="doc-step-num">01</div><div><strong>Transfer Initiated</strong><p>Clinical staff initiates a transfer in the EMR, specifying the destination unit, room, or facility.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">02</div><div><strong>ADT A02 Message</strong><p>An HL7 ADT A02 (Transfer Patient) message is transmitted to Provation Apex, updating the patient location in the case record.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">03</div><div><strong>Case Record Updated</strong><p>The Provation Apex case reflects the new location. Any pending documentation or unsigned notes are flagged for the receiving care team.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">04</div><div><strong>Continuity of Care</strong><p>All case documentation, images, and notes remain accessible to the receiving team. No data is lost or duplicated during transfer.</p></div></div>
+          </div>
+        </div>
+        <div class="doc-content-aside">
+          <div class="doc-info-card reveal"><div class="doc-info-title">HL7 Event</div><div class="doc-info-value">ADT A02 — Transfer Patient</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Data Updated</div><div class="doc-info-value">Location, Room, Attending Physician</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Documentation</div><div class="doc-info-value">Fully preserved — no re-entry needed</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Pending Items</div><div class="doc-info-value">Flagged for receiving team review</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt parallax-section doc-subsection" id="cw-discharge" data-parallax="0.1">
+    <div class="container">
+      <div class="doc-subsection-header reveal">
+        <div class="doc-sub-num">1h</div>
+        <div><div class="section-label">Clinical Workflow</div><h2 class="section-title">Discharge</h2></div>
+      </div>
+      <div class="doc-content-grid">
+        <div class="doc-content-main reveal">
+          <p>Discharge closes the clinical encounter in Provation Apex. An ADT A03 message triggers final case reconciliation — ensuring all documentation is complete, all charges are captured, and the procedure note is signed and transmitted to the patient's permanent chart.</p>
+          <div class="doc-steps">
+            <div class="doc-step reveal"><div class="doc-step-num">01</div><div><strong>Discharge Initiated</strong><p>Clinical staff initiates discharge in the EMR after confirming the patient is clinically ready and all documentation is complete.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">02</div><div><strong>ADT A03 Message</strong><p>An HL7 ADT A03 (Discharge Patient) message is sent to Provation Apex, triggering final case reconciliation.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">03</div><div><strong>Documentation Check</strong><p>Provation Apex verifies that the physician note is signed, charges are captured, and all required fields are complete. Incomplete items are flagged.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">04</div><div><strong>Case Closed</strong><p>The case is closed and archived. The completed procedure note is permanently stored in the patient's EMR chart and available for future reference.</p></div></div>
+          </div>
+        </div>
+        <div class="doc-content-aside">
+          <div class="doc-info-card reveal"><div class="doc-info-title">HL7 Event</div><div class="doc-info-value">ADT A03 — Discharge Patient</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Validation</div><div class="doc-info-value">Signature, charges, required fields</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Final Output</div><div class="doc-info-value">Signed note → EMR chart (ORU)</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Case Status</div><div class="doc-info-value">Closed & Archived</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 2 — CONTACTS
+  ═══════════════════════════════════════════════════════ -->
+  <section class="section section-dark parallax-section doc-section" id="contacts" data-parallax="0.15">
+    <div class="container">
+      <div class="section-label light reveal">Section 2</div>
+      <h2 class="section-title light reveal">Contacts</h2>
+      <p class="section-desc light reveal">Key personnel, departments, and support resources for Provation Apex at DHR Health.</p>
+      <div class="doc-nav-grid reveal">
+        <a href="#ct-departments" class="doc-nav-card"><span>🏢</span><span>Departments & Locations</span></a>
+        <a href="#ct-leadership" class="doc-nav-card"><span>👔</span><span>Decision Makers</span></a>
+        <a href="#ct-powerusers" class="doc-nav-card"><span>⚡</span><span>Power Users</span></a>
+        <a href="#ct-support" class="doc-nav-card"><span>🛟</span><span>Support</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section parallax-section doc-subsection" id="ct-departments" data-parallax="0.1">
+    <div class="container">
+      <div class="doc-subsection-header reveal">
+        <div class="doc-sub-num">2a</div>
+        <div><div class="section-label">Contacts</div><h2 class="section-title">Departments, Buildings & Locations</h2></div>
+      </div>
+      <div class="contacts-grid" id="departmentsGrid">
+        <div class="contact-card reveal">
+          <div class="contact-card-header"><span class="contact-icon">🏥</span><div><div class="contact-name">Endoscopy Unit</div><div class="contact-role">Primary Provation Apex Location</div></div></div>
+          <div class="contact-details">
+            <div class="contact-detail"><span>🏢</span><span>DHR Health — Main Campus</span></div>
+            <div class="contact-detail"><span>📍</span><span>5501 S McColl Rd, Edinburg, TX 78539</span></div>
+            <div class="contact-detail"><span>🔢</span><span>Building: Medical Tower</span></div>
+          </div>
+        </div>
+        <div class="contact-card reveal">
+          <div class="contact-card-header"><span class="contact-icon">💻</span><div><div class="contact-name">Information Technology</div><div class="contact-role">Application Owner & Support</div></div></div>
+          <div class="contact-details">
+            <div class="contact-detail"><span>🏢</span><span>DHR Health IT Department</span></div>
+            <div class="contact-detail"><span>📍</span><span>Main Campus — IT Building</span></div>
+            <div class="contact-detail"><span>🔢</span><span>Helpdesk: Ext. [IT-EXT]</span></div>
+          </div>
+        </div>
+        <div class="contact-card reveal">
+          <div class="contact-card-header"><span class="contact-icon">💊</span><div><div class="contact-name">Gastroenterology</div><div class="contact-role">Primary Clinical Department</div></div></div>
+          <div class="contact-details">
+            <div class="contact-detail"><span>🏢</span><span>DHR Health GI Clinic</span></div>
+            <div class="contact-detail"><span>📍</span><span>Main Campus — Clinic Building</span></div>
+            <div class="contact-detail"><span>🔢</span><span>Dept: [GI-EXT]</span></div>
+          </div>
+        </div>
+        <div class="contact-card reveal">
+          <div class="contact-card-header"><span class="contact-icon">💰</span><div><div class="contact-name">Revenue Cycle / Billing</div><div class="contact-role">Charge Capture & Coding</div></div></div>
+          <div class="contact-details">
+            <div class="contact-detail"><span>🏢</span><span>DHR Health Revenue Cycle</span></div>
+            <div class="contact-detail"><span>📍</span><span>Administrative Building</span></div>
+            <div class="contact-detail"><span>🔢</span><span>Dept: [RC-EXT]</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt parallax-section doc-subsection" id="ct-leadership" data-parallax="0.1">
+    <div class="container">
+      <div class="doc-subsection-header reveal">
+        <div class="doc-sub-num">2b</div>
+        <div><div class="section-label">Contacts</div><h2 class="section-title">Decision Makers, Directors & VPs</h2></div>
+      </div>
+      <div class="contacts-grid" id="leadershipGrid">
+        <div class="contact-card reveal">
+          <div class="contact-card-header"><span class="contact-icon">👔</span><div><div class="contact-name">[CIO / VP of IT]</div><div class="contact-role">Chief Information Officer</div></div></div>
+          <div class="contact-details">
+            <div class="contact-detail"><span>🏢</span><span>DHR Health Information Technology</span></div>
+            <div class="contact-detail"><span>📧</span><span>[cio@dhrhealth.com]</span></div>
+            <div class="contact-detail"><span>📞</span><span>[CIO-PHONE]</span></div>
+          </div>
+        </div>
+        <div class="contact-card reveal">
+          <div class="contact-card-header"><span class="contact-icon">🏥</span><div><div class="contact-name">[Director of Endoscopy]</div><div class="contact-role">Clinical Director</div></div></div>
+          <div class="contact-details">
+            <div class="contact-detail"><span>🏢</span><span>Endoscopy Unit</span></div>
+            <div class="contact-detail"><span>📧</span><span>[director@dhrhealth.com]</span></div>
+            <div class="contact-detail"><span>📞</span><span>[DIR-PHONE]</span></div>
+          </div>
+        </div>
+        <div class="contact-card reveal">
+          <div class="contact-card-header"><span class="contact-icon">⚙️</span><div><div class="contact-name">[IT Applications Manager]</div><div class="contact-role">Application Owner</div></div></div>
+          <div class="contact-details">
+            <div class="contact-detail"><span>🏢</span><span>IT — Clinical Applications</span></div>
+            <div class="contact-detail"><span>📧</span><span>[appmgr@dhrhealth.com]</span></div>
+            <div class="contact-detail"><span>📞</span><span>[APP-PHONE]</span></div>
+          </div>
+        </div>
+        <div class="contact-card reveal">
+          <div class="contact-card-header"><span class="contact-icon">💰</span><div><div class="contact-name">[VP Revenue Cycle]</div><div class="contact-role">Billing & Compliance Oversight</div></div></div>
+          <div class="contact-details">
+            <div class="contact-detail"><span>🏢</span><span>Revenue Cycle Management</span></div>
+            <div class="contact-detail"><span>📧</span><span>[rcvp@dhrhealth.com]</span></div>
+            <div class="contact-detail"><span>📞</span><span>[RC-PHONE]</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section parallax-section doc-subsection" id="ct-powerusers" data-parallax="0.1">
+    <div class="container">
+      <div class="doc-subsection-header reveal">
+        <div class="doc-sub-num">2c</div>
+        <div><div class="section-label">Contacts</div><h2 class="section-title">Power Users & Validation Resources</h2></div>
+      </div>
+      <p class="section-desc reveal">Power users are trained super-users who serve as the first line of support and validation for Provation Apex within their departments.</p>
+      <div class="contacts-grid">
+        <div class="contact-card reveal">
+          <div class="contact-card-header"><span class="contact-icon">⚡</span><div><div class="contact-name">[Endoscopy Power User]</div><div class="contact-role">Clinical Super-User — Endoscopy</div></div></div>
+          <div class="contact-details">
+            <div class="contact-detail"><span>🏢</span><span>Endoscopy Unit</span></div>
+            <div class="contact-detail"><span>📧</span><span>[poweruser1@dhrhealth.com]</span></div>
+            <div class="contact-detail"><span>🎓</span><span>Trained: Go-Live + Advanced</span></div>
+          </div>
+        </div>
+        <div class="contact-card reveal">
+          <div class="contact-card-header"><span class="contact-icon">⚡</span><div><div class="contact-name">[GI Clinic Power User]</div><div class="contact-role">Clinical Super-User — GI</div></div></div>
+          <div class="contact-details">
+            <div class="contact-detail"><span>🏢</span><span>Gastroenterology Clinic</span></div>
+            <div class="contact-detail"><span>📧</span><span>[poweruser2@dhrhealth.com]</span></div>
+            <div class="contact-detail"><span>🎓</span><span>Trained: Go-Live + Physician Workflow</span></div>
+          </div>
+        </div>
+        <div class="contact-card reveal">
+          <div class="contact-card-header"><span class="contact-icon">🔧</span><div><div class="contact-name">[IT Analyst — Provation]</div><div class="contact-role">Technical Validation Resource</div></div></div>
+          <div class="contact-details">
+            <div class="contact-detail"><span>🏢</span><span>IT — Clinical Applications</span></div>
+            <div class="contact-detail"><span>📧</span><span>[analyst@dhrhealth.com]</span></div>
+            <div class="contact-detail"><span>🎓</span><span>Interface + Admin Certified</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt parallax-section doc-subsection" id="ct-support" data-parallax="0.1">
+    <div class="container">
+      <div class="doc-subsection-header reveal">
+        <div class="doc-sub-num">2d</div>
+        <div><div class="section-label">Contacts</div><h2 class="section-title">Support</h2></div>
+      </div>
+      <div class="support-grid">
+        <div class="support-tier reveal">
+          <div class="support-tier-badge tier-1">Tier 1</div>
+          <h3>DHR Health IT Helpdesk</h3>
+          <p>First point of contact for all Provation Apex issues. Handles password resets, login issues, basic navigation, and ticket creation.</p>
+          <div class="support-contact"><span>📞</span><span>[HELPDESK-PHONE]</span></div>
+          <div class="support-contact"><span>📧</span><span>[helpdesk@dhrhealth.com]</span></div>
+          <div class="support-contact"><span>🕐</span><span>24/7 Coverage</span></div>
+        </div>
+        <div class="support-tier reveal">
+          <div class="support-tier-badge tier-2">Tier 2</div>
+          <h3>Clinical Applications Team</h3>
+          <p>Handles application configuration, interface issues, template modifications, and escalated clinical workflow problems.</p>
+          <div class="support-contact"><span>📞</span><span>[CLINAPPS-PHONE]</span></div>
+          <div class="support-contact"><span>📧</span><span>[clinapps@dhrhealth.com]</span></div>
+          <div class="support-contact"><span>🕐</span><span>Mon–Fri 7am–6pm</span></div>
+        </div>
+        <div class="support-tier reveal">
+          <div class="support-tier-badge tier-3">Tier 3</div>
+          <h3>Provation Vendor Support</h3>
+          <p>Escalated vendor support for application bugs, licensing, upgrades, and issues beyond DHR IT scope.</p>
+          <div class="support-contact"><span>📞</span><span>[PROVATION-SUPPORT]</span></div>
+          <div class="support-contact"><span>🌐</span><span>support.provationmedical.com</span></div>
+          <div class="support-contact"><span>🕐</span><span>Business Hours + Emergency Line</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 3 — FUNCTIONAL SPECIFICATIONS
+  ═══════════════════════════════════════════════════════ -->
+  <section class="section section-dark parallax-section doc-section" id="functional-specs" data-parallax="0.15">
+    <div class="container">
+      <div class="section-label light reveal">Section 3</div>
+      <h2 class="section-title light reveal">Application Functional Specifications</h2>
+      <p class="section-desc light reveal">What Provation Apex does, how it works, and how it's tested and documented.</p>
+      <div class="doc-nav-grid reveal">
+        <a href="#fs-purpose" class="doc-nav-card"><span>🎯</span><span>Application Purpose</span></a>
+        <a href="#fs-features" class="doc-nav-card"><span>✨</span><span>Features</span></a>
+        <a href="#fs-appworkflow" class="doc-nav-card"><span>🔄</span><span>App Workflow</span></a>
+        <a href="#fs-testing" class="doc-nav-card"><span>🧪</span><span>Testing & SOPs</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section parallax-section doc-subsection" id="fs-purpose" data-parallax="0.1">
+    <div class="container">
+      <div class="doc-subsection-header reveal">
+        <div class="doc-sub-num">3a</div>
+        <div><div class="section-label">Functional Specs</div><h2 class="section-title">Application Purpose</h2></div>
+      </div>
+      <div class="doc-content-grid">
+        <div class="doc-content-main reveal">
+          <p>Provation Apex is an enterprise endoscopy reporting and documentation platform designed to streamline the complete clinical documentation lifecycle for gastrointestinal procedures. It replaces paper-based and fragmented documentation workflows with a single, integrated system.</p>
+          <p style="margin-top:1rem;">At DHR Health, Provation Apex serves as the system of record for all endoscopy procedures — capturing real-time clinical data, images, and physician notes, then automatically distributing completed documentation to the EMR, billing, and downstream systems.</p>
+          <div class="purpose-pillars">
+            <div class="purpose-pillar reveal"><div class="pillar-icon">📋</div><div class="pillar-title">Documentation</div><p>Structured, real-time procedure documentation with auto-generated physician notes.</p></div>
+            <div class="purpose-pillar reveal"><div class="pillar-icon">🔗</div><div class="pillar-title">Integration</div><p>Bidirectional HL7 interfaces with EMR, scheduling, imaging, and billing systems.</p></div>
+            <div class="purpose-pillar reveal"><div class="pillar-icon">📸</div><div class="pillar-title">Image Management</div><p>Direct scope image capture and management integrated into the case record.</p></div>
+            <div class="purpose-pillar reveal"><div class="pillar-icon">✅</div><div class="pillar-title">Compliance</div><p>Cybersecurity certified, audit-logged, and designed for regulatory compliance.</p></div>
+          </div>
+        </div>
+        <div class="doc-content-aside">
+          <div class="doc-info-card reveal"><div class="doc-info-title">Vendor</div><div class="doc-info-value">Provation Medical</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Product</div><div class="doc-info-value">Provation Apex</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Specialty</div><div class="doc-info-value">Gastroenterology / Endoscopy</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Deployment</div><div class="doc-info-value">On-Premise / Hosted</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Users</div><div class="doc-info-value">Physicians, Nurses, Clinical Staff, IT</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt parallax-section doc-subsection" id="fs-features" data-parallax="0.1">
+    <div class="container">
+      <div class="doc-subsection-header reveal">
+        <div class="doc-sub-num">3b</div>
+        <div><div class="section-label">Functional Specs</div><h2 class="section-title">Features</h2></div>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card reveal"><div class="feature-icon">🏥</div><h3>ADT / HL7 Integration</h3><p>Automatic patient data population via HL7 ADT messages. No manual demographic entry required.</p></div>
+        <div class="feature-card reveal"><div class="feature-icon">📅</div><h3>Scheduling Integration</h3><p>Real-time worklist population via SIU scheduling messages. Schedule changes reflect instantly.</p></div>
+        <div class="feature-card reveal"><div class="feature-icon">📋</div><h3>Structured Documentation</h3><p>Procedure-specific templates for colonoscopy, upper endoscopy, ERCP, and more.</p></div>
+        <div class="feature-card reveal"><div class="feature-icon">📸</div><h3>Scope Image Capture</h3><p>Direct integration with Olympus CV-180/190 and Pentax IMAGINA imaging systems.</p></div>
+        <div class="feature-card reveal"><div class="feature-icon">✍️</div><h3>Electronic Signature</h3><p>Credential-bound physician e-signature with timestamp and document lock.</p></div>
+        <div class="feature-card reveal"><div class="feature-icon">📤</div><h3>Auto Chart Distribution</h3><p>Completed notes automatically transmitted to EMR chart via ORU HL7 message.</p></div>
+        <div class="feature-card reveal"><div class="feature-icon">💰</div><h3>Charge Capture</h3><p>Auto-suggested CPT/ICD-10 codes with direct billing system export.</p></div>
+        <div class="feature-card reveal"><div class="feature-icon">🏷️</div><h3>Specimen Labels</h3><p>Auto-generated specimen labels for pathology submission with full chain of custody.</p></div>
+        <div class="feature-card reveal"><div class="feature-icon">📴</div><h3>Offline Mode</h3><p>Local cache allows documentation to continue during network outages, with automatic sync on reconnect.</p></div>
+        <div class="feature-card reveal"><div class="feature-icon">🔐</div><h3>Azure AD SSO</h3><p>Single sign-on via Azure Active Directory. No separate Provation credentials required.</p></div>
+        <div class="feature-card reveal"><div class="feature-icon">📊</div><h3>Reporting & Analytics</h3><p>Built-in reporting for procedure volumes, quality metrics, and documentation compliance.</p></div>
+        <div class="feature-card reveal"><div class="feature-icon">🔍</div><h3>Audit Trail</h3><p>Complete audit log of all user actions, document changes, and system events.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section parallax-section doc-subsection" id="fs-appworkflow" data-parallax="0.1">
+    <div class="container">
+      <div class="doc-subsection-header reveal">
+        <div class="doc-sub-num">3c</div>
+        <div><div class="section-label">Functional Specs</div><h2 class="section-title">Application Workflow Overview</h2></div>
+      </div>
+      <p class="section-desc reveal">The end-to-end Provation Apex workflow spans from patient scheduling through final chart documentation. Each phase is connected via automated interfaces, eliminating manual handoffs.</p>
+      <div class="app-workflow-timeline">
+        <div class="awt-item reveal"><div class="awt-phase">Pre-Procedure</div><div class="awt-steps"><span>Schedule → SIU</span><span>Register → ADT A01</span><span>Order → ORM</span></div></div>
+        <div class="awt-arrow reveal">→</div>
+        <div class="awt-item reveal"><div class="awt-phase">Procedure</div><div class="awt-steps"><span>Case Open</span><span>Scope Assign</span><span>Image Capture</span><span>Real-time Charting</span></div></div>
+        <div class="awt-arrow reveal">→</div>
+        <div class="awt-item reveal"><div class="awt-phase">Post-Procedure</div><div class="awt-steps"><span>Note Generation</span><span>Charge Capture</span><span>Physician Sign</span></div></div>
+        <div class="awt-arrow reveal">→</div>
+        <div class="awt-item reveal"><div class="awt-phase">Distribution</div><div class="awt-steps"><span>ORU → EMR Chart</span><span>DFT → Billing</span><span>ADT A03 → Discharge</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt parallax-section doc-subsection" id="fs-testing" data-parallax="0.1">
+    <div class="container">
+      <div class="doc-subsection-header reveal">
+        <div class="doc-sub-num">3d</div>
+        <div><div class="section-label">Functional Specs</div><h2 class="section-title">Testing & Documentation</h2></div>
+      </div>
+      <div class="testing-grid">
+        <div class="testing-card reveal">
+          <div class="testing-card-icon">🧪</div>
+          <h3>Testing Plans</h3>
+          <p>Structured test plans covering interface validation, workflow testing, image capture, charge capture, and physician signature workflows.</p>
+          <ul class="testing-list">
+            <li>Interface smoke tests (ADT, SIU, ORM, ORU)</li>
+            <li>End-to-end workflow validation</li>
+            <li>Offline mode testing</li>
+            <li>Hardware integration testing (Phases 1 & 2)</li>
+            <li>User acceptance testing (UAT)</li>
+          </ul>
+        </div>
+        <div class="testing-card reveal">
+          <div class="testing-card-icon">📖</div>
+          <h3>Standard Operating Procedures</h3>
+          <p>Role-based SOPs covering daily operations, troubleshooting, and escalation procedures for all Provation Apex user types.</p>
+          <ul class="testing-list">
+            <li>SOP — End User (clinical staff)</li>
+            <li>SOP — Administrator (IT/super-user)</li>
+            <li>SOP — Helpdesk (Tier 1 support)</li>
+            <li>Go-Live week procedures</li>
+            <li>Offline mode recovery SOP</li>
+          </ul>
+        </div>
+        <div class="testing-card reveal">
+          <div class="testing-card-icon">📚</div>
+          <h3>Knowledge Base Articles</h3>
+          <p>Quick-reference articles for common issues, configuration tasks, and how-to guides for Provation Apex users and administrators.</p>
+          <ul class="testing-list">
+            <li>Login & authentication guide</li>
+            <li>Image transfer from Olympus scopes</li>
+            <li>Charge code lookup and correction</li>
+            <li>Offline mode — what to do</li>
+            <li>Specimen label reprinting</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 4 — TECHNICAL & OPERATIONAL SPECIFICATIONS
+  ═══════════════════════════════════════════════════════ -->
+  <section class="section section-dark parallax-section doc-section" id="technical-specs" data-parallax="0.15">
+    <div class="container">
+      <div class="section-label light reveal">Section 4</div>
+      <h2 class="section-title light reveal">Technical & Operational Specifications</h2>
+      <p class="section-desc light reveal">Infrastructure, interfaces, security configuration, and authentication details for Provation Apex at DHR Health.</p>
+      <div class="doc-nav-grid reveal">
+        <a href="#ts-infrastructure" class="doc-nav-card"><span>🖥️</span><span>Infrastructure</span></a>
+        <a href="#ts-interfaces" class="doc-nav-card"><span>🔌</span><span>Interfaces</span></a>
+        <a href="#ts-security" class="doc-nav-card"><span>🔒</span><span>Security & Network</span></a>
+        <a href="#ts-auth" class="doc-nav-card"><span>🔑</span><span>Authentication</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section parallax-section doc-subsection" id="ts-infrastructure" data-parallax="0.1">
+    <div class="container">
+      <div class="doc-subsection-header reveal">
+        <div class="doc-sub-num">4a</div>
+        <div><div class="section-label">Technical Specs</div><h2 class="section-title">Infrastructure</h2></div>
+      </div>
+      <div class="infra-grid">
+        <div class="infra-section reveal">
+          <h3 class="infra-title"><span>🖥️</span> Server List & Specifications</h3>
+          <div class="infra-table">
+            <div class="infra-row header"><span>Server Name</span><span>Role</span><span>OS</span><span>Specs</span></div>
+            <div class="infra-row"><span>[APEX-APP01]</span><span>Application Server</span><span>Windows Server 2019</span><span>[CPU/RAM/Storage]</span></div>
+            <div class="infra-row"><span>[APEX-DB01]</span><span>Database Server</span><span>Windows Server 2019</span><span>[CPU/RAM/Storage]</span></div>
+            <div class="infra-row"><span>[APEX-IMG01]</span><span>Image Server</span><span>Windows Server 2019</span><span>[CPU/RAM/Storage]</span></div>
+            <div class="infra-row"><span>[APEX-INT01]</span><span>Interface Engine</span><span>Windows Server 2019</span><span>[CPU/RAM/Storage]</span></div>
+          </div>
+        </div>
+        <div class="infra-section reveal">
+          <h3 class="infra-title"><span>💻</span> PC / Workstation Requirements</h3>
+          <div class="spec-list">
+            <div class="spec-list-item"><span class="spec-list-label">OS</span><span>Windows 10/11 Pro (64-bit)</span></div>
+            <div class="spec-list-item"><span class="spec-list-label">Browser</span><span>Chrome 100+ / Edge 100+</span></div>
+            <div class="spec-list-item"><span class="spec-list-label">RAM</span><span>8 GB minimum, 16 GB recommended</span></div>
+            <div class="spec-list-item"><span class="spec-list-label">CPU</span><span>Intel Core i5 / AMD Ryzen 5 or better</span></div>
+            <div class="spec-list-item"><span class="spec-list-label">Display</span><span>1920×1080 minimum</span></div>
+            <div class="spec-list-item"><span class="spec-list-label">Network</span><span>Wired LAN preferred; Wi-Fi supported</span></div>
+            <div class="spec-list-item"><span class="spec-list-label">Domain</span><span>DHR Health Active Directory joined</span></div>
+          </div>
+        </div>
+        <div class="infra-section reveal">
+          <h3 class="infra-title"><span>🔧</span> Hardware Inventory</h3>
+          <div class="spec-list">
+            <div class="spec-list-item"><span class="spec-list-label">Workstations</span><span>See: Current Provation Workstations.xlsx</span></div>
+            <div class="spec-list-item"><span class="spec-list-label">Scope Systems</span><span>Olympus CV-180, CV-190, Pentax IMAGINA</span></div>
+            <div class="spec-list-item"><span class="spec-list-label">Label Printers</span><span>Zebra — Specimen label printing</span></div>
+            <div class="spec-list-item"><span class="spec-list-label">Cabling</span><span>See: Olympus/Pentax Cabling Diagrams</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt parallax-section doc-subsection" id="ts-interfaces" data-parallax="0.1">
+    <div class="container">
+      <div class="doc-subsection-header reveal">
+        <div class="doc-sub-num">4b</div>
+        <div><div class="section-label">Technical Specs</div><h2 class="section-title">Interfaces</h2></div>
+      </div>
+      <div class="interface-cards">
+        <div class="interface-card reveal">
+          <div class="interface-card-header"><span class="interface-badge">HL7 ADT</span><h3>ADT Interface</h3></div>
+          <p>Bidirectional patient demographic and encounter data exchange between the EMR and Provation Apex.</p>
+          <div class="interface-details">
+            <div><span>Events:</span><span>A01 Admit · A02 Transfer · A03 Discharge · A08 Update</span></div>
+            <div><span>Direction:</span><span>EMR → Provation Apex</span></div>
+            <div><span>Engine:</span><span>[Interface Engine Name]</span></div>
+            <div><span>Filters:</span><span>Facility code, patient class, location</span></div>
+          </div>
+        </div>
+        <div class="interface-card reveal">
+          <div class="interface-card-header"><span class="interface-badge">HL7 SIU</span><h3>Scheduling Interface</h3></div>
+          <p>Real-time procedure schedule synchronization from the hospital scheduling system to Provation Apex worklist.</p>
+          <div class="interface-details">
+            <div><span>Events:</span><span>S12 New · S13 Reschedule · S15 Cancel · S17 Delete</span></div>
+            <div><span>Direction:</span><span>Scheduling → Provation Apex</span></div>
+            <div><span>Filters:</span><span>Department, procedure type, resource</span></div>
+          </div>
+        </div>
+        <div class="interface-card reveal">
+          <div class="interface-card-header"><span class="interface-badge">HL7 ORM/ORU</span><h3>Orders & Results Interface</h3></div>
+          <p>Inbound procedure orders from EMR; outbound completed procedure notes back to EMR chart.</p>
+          <div class="interface-details">
+            <div><span>Inbound:</span><span>ORM O01 — General Order</span></div>
+            <div><span>Outbound:</span><span>ORU R01 — Observation Result (signed note)</span></div>
+            <div><span>Trigger:</span><span>Physician electronic signature</span></div>
+          </div>
+        </div>
+        <div class="interface-card reveal">
+          <div class="interface-card-header"><span class="interface-badge">Imaging</span><h3>Scope Imaging Interface</h3></div>
+          <p>Direct image capture from endoscope processors into the Provation Apex case record.</p>
+          <div class="interface-details">
+            <div><span>Systems:</span><span>Olympus CV-180/190, Pentax IMAGINA</span></div>
+            <div><span>Protocol:</span><span>DICOM / Proprietary capture</span></div>
+            <div><span>Trigger:</span><span>Scope + physician assigned to case</span></div>
+          </div>
+        </div>
+        <div class="interface-card reveal">
+          <div class="interface-card-header"><span class="interface-badge">HL7 DFT</span><h3>Charge / Billing Interface</h3></div>
+          <p>Outbound charge data transmission to the billing system upon case completion.</p>
+          <div class="interface-details">
+            <div><span>Event:</span><span>DFT P03 — Post Detail Financial Transaction</span></div>
+            <div><span>Direction:</span><span>Provation Apex → Billing System</span></div>
+            <div><span>Trigger:</span><span>Case completion / charge confirmation</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section parallax-section doc-subsection" id="ts-security" data-parallax="0.1">
+    <div class="container">
+      <div class="doc-subsection-header reveal">
+        <div class="doc-sub-num">4c</div>
+        <div><div class="section-label">Technical Specs</div><h2 class="section-title">Security & Network Configuration</h2></div>
+      </div>
+      <div class="security-grid">
+        <div class="security-section reveal">
+          <h3><span>🌐</span> Whitelisted Websites / URLs</h3>
+          <div class="security-table">
+            <div class="security-row header"><span>URL / Domain</span><span>Purpose</span></div>
+            <div class="security-row"><span>[apex.dhrhealth.local]</span><span>Provation Apex Application</span></div>
+            <div class="security-row"><span>[provationmedical.com]</span><span>Vendor Support Portal</span></div>
+            <div class="security-row"><span>[login.microsoftonline.com]</span><span>Azure AD Authentication</span></div>
+            <div class="security-row"><span>[fonts.googleapis.com]</span><span>UI Font Resources</span></div>
+          </div>
+        </div>
+        <div class="security-section reveal">
+          <h3><span>🔌</span> Assigned Ports</h3>
+          <div class="security-table">
+            <div class="security-row header"><span>Port</span><span>Protocol</span><span>Purpose</span></div>
+            <div class="security-row"><span>443</span><span>HTTPS</span><span>Application Web Access</span></div>
+            <div class="security-row"><span>80</span><span>HTTP</span><span>Redirect to HTTPS</span></div>
+            <div class="security-row"><span>[HL7-PORT]</span><span>TCP/MLLP</span><span>HL7 Interface Engine</span></div>
+            <div class="security-row"><span>1433</span><span>SQL</span><span>Database (internal only)</span></div>
+            <div class="security-row"><span>[IMG-PORT]</span><span>TCP</span><span>Scope Imaging</span></div>
+          </div>
+        </div>
+        <div class="security-section reveal">
+          <h3><span>🛡️</span> Antivirus & Security Exclusions</h3>
+          <div class="spec-list">
+            <div class="spec-list-item"><span class="spec-list-label">AV Exclusion</span><span>Provation Apex install directory</span></div>
+            <div class="spec-list-item"><span class="spec-list-label">AV Exclusion</span><span>Image storage path</span></div>
+            <div class="spec-list-item"><span class="spec-list-label">AV Exclusion</span><span>Interface engine directory</span></div>
+            <div class="spec-list-item"><span class="spec-list-label">AV Exclusion</span><span>Database data files (.mdf, .ldf)</span></div>
+            <div class="spec-list-item"><span class="spec-list-label">Firewall</span><span>Allow inbound on HL7 port from EMR servers</span></div>
+            <div class="spec-list-item"><span class="spec-list-label">Firewall</span><span>Allow outbound to Azure AD endpoints</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt parallax-section doc-subsection" id="ts-auth" data-parallax="0.1">
+    <div class="container">
+      <div class="doc-subsection-header reveal">
+        <div class="doc-sub-num">4d</div>
+        <div><div class="section-label">Technical Specs</div><h2 class="section-title">Authentication</h2></div>
+      </div>
+      <div class="doc-content-grid">
+        <div class="doc-content-main reveal">
+          <p>Provation Apex at DHR Health uses Azure Active Directory (Azure AD) for Single Sign-On (SSO) authentication. Users log in with their standard DHR Health network credentials — no separate Provation username or password is required.</p>
+          <div class="doc-steps">
+            <div class="doc-step reveal"><div class="doc-step-num">01</div><div><strong>User Launches Provation Apex</strong><p>User navigates to the Provation Apex URL or launches the application from their workstation.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">02</div><div><strong>Azure AD Redirect</strong><p>The application redirects to the Microsoft Azure AD login page (login.microsoftonline.com) for authentication.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">03</div><div><strong>DHR Credentials</strong><p>User enters their standard DHR Health network username and password. MFA may be required per DHR security policy.</p></div></div>
+            <div class="doc-step reveal"><div class="doc-step-num">04</div><div><strong>Token Issued</strong><p>Azure AD issues an OAuth 2.0 / SAML token. Provation Apex validates the token and grants access based on the user's assigned role.</p></div></div>
+          </div>
+        </div>
+        <div class="doc-content-aside">
+          <div class="doc-info-card reveal"><div class="doc-info-title">Auth Method</div><div class="doc-info-value">Azure Active Directory SSO</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Protocol</div><div class="doc-info-value">OAuth 2.0 / SAML 2.0</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">MFA</div><div class="doc-info-value">Per DHR Security Policy</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Role Management</div><div class="doc-info-value">Azure AD Groups → Provation Roles</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Setup Guide</div><div class="doc-info-value">Azure AD Setup QRG v3.2021</div></div>
+          <div class="doc-info-card reveal"><div class="doc-info-title">Password Reset</div><div class="doc-info-value">DHR IT Helpdesk / Self-Service Portal</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       ARCHITECTURE + RESOURCES + FOOTER
+  ═══════════════════════════════════════════════════════ -->
+  <!-- RESOURCES -->
+  <section class="section section-alt parallax-section" id="resources" data-parallax="0.15">
+    <div class="container">
+      <div class="section-label reveal">Documentation</div>
+      <h2 class="section-title reveal">Resources & References</h2>
+      <p class="section-desc reveal">All supporting documentation organized by category.</p>
       <div class="resources-grid" id="resourcesGrid"></div>
     </div>
   </section>
