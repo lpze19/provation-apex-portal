@@ -43,59 +43,21 @@
     <span>⌘</span> Quick Nav <kbd>Ctrl K</kbd>
   </button>
 
-  <!-- SIDE NAV -->
-  <nav class="sidenav" id="sidenav">
-    <ul class="sidenav-links">
-      <li class="sidenav-group">
-        <a href="#overview" class="sidenav-link sidenav-parent" data-section="overview"><span class="sidenav-dot"></span><span class="sidenav-label">Overview</span></a>
-      </li>
-      <li class="sidenav-group">
-        <a href="#clinical-workflow" class="sidenav-link sidenav-parent" data-section="clinical-workflow"><span class="sidenav-dot"></span><span class="sidenav-label">Clinical Workflow</span></a>
-        <ul class="sidenav-sub">
-          <li><a href="#cw-admission" class="sidenav-link sidenav-child" data-section="cw-admission"><span class="sidenav-dot"></span><span class="sidenav-label">Admission</span></a></li>
-          <li><a href="#cw-scheduling" class="sidenav-link sidenav-child" data-section="cw-scheduling"><span class="sidenav-dot"></span><span class="sidenav-label">Scheduling</span></a></li>
-          <li><a href="#cw-orders" class="sidenav-link sidenav-child" data-section="cw-orders"><span class="sidenav-dot"></span><span class="sidenav-label">Orders</span></a></li>
-          <li><a href="#cw-charting" class="sidenav-link sidenav-child" data-section="cw-charting"><span class="sidenav-dot"></span><span class="sidenav-label">Charting</span></a></li>
-          <li><a href="#cw-physician-note" class="sidenav-link sidenav-child" data-section="cw-physician-note"><span class="sidenav-dot"></span><span class="sidenav-label">Physician Note</span></a></li>
-          <li><a href="#cw-charges" class="sidenav-link sidenav-child" data-section="cw-charges"><span class="sidenav-dot"></span><span class="sidenav-label">Charges</span></a></li>
-          <li><a href="#cw-transfer" class="sidenav-link sidenav-child" data-section="cw-transfer"><span class="sidenav-dot"></span><span class="sidenav-label">Transfer</span></a></li>
-          <li><a href="#cw-discharge" class="sidenav-link sidenav-child" data-section="cw-discharge"><span class="sidenav-dot"></span><span class="sidenav-label">Discharge</span></a></li>
-        </ul>
-      </li>
-      <li class="sidenav-group">
-        <a href="#contacts" class="sidenav-link sidenav-parent" data-section="contacts"><span class="sidenav-dot"></span><span class="sidenav-label">Contacts</span></a>
-        <ul class="sidenav-sub">
-          <li><a href="#ct-departments" class="sidenav-link sidenav-child" data-section="ct-departments"><span class="sidenav-dot"></span><span class="sidenav-label">Departments</span></a></li>
-          <li><a href="#ct-leadership" class="sidenav-link sidenav-child" data-section="ct-leadership"><span class="sidenav-dot"></span><span class="sidenav-label">Leadership</span></a></li>
-          <li><a href="#ct-powerusers" class="sidenav-link sidenav-child" data-section="ct-powerusers"><span class="sidenav-dot"></span><span class="sidenav-label">Power Users</span></a></li>
-          <li><a href="#ct-support" class="sidenav-link sidenav-child" data-section="ct-support"><span class="sidenav-dot"></span><span class="sidenav-label">Support</span></a></li>
-        </ul>
-      </li>
-      <li class="sidenav-group">
-        <a href="#functional-specs" class="sidenav-link sidenav-parent" data-section="functional-specs"><span class="sidenav-dot"></span><span class="sidenav-label">Functional Specs</span></a>
-        <ul class="sidenav-sub">
-          <li><a href="#fs-purpose" class="sidenav-link sidenav-child" data-section="fs-purpose"><span class="sidenav-dot"></span><span class="sidenav-label">Purpose</span></a></li>
-          <li><a href="#fs-features" class="sidenav-link sidenav-child" data-section="fs-features"><span class="sidenav-dot"></span><span class="sidenav-label">Features</span></a></li>
-          <li><a href="#fs-appworkflow" class="sidenav-link sidenav-child" data-section="fs-appworkflow"><span class="sidenav-dot"></span><span class="sidenav-label">App Workflow</span></a></li>
-          <li><a href="#fs-testing" class="sidenav-link sidenav-child" data-section="fs-testing"><span class="sidenav-dot"></span><span class="sidenav-label">Testing & SOPs</span></a></li>
-        </ul>
-      </li>
-      <li class="sidenav-group">
-        <a href="#technical-specs" class="sidenav-link sidenav-parent" data-section="technical-specs"><span class="sidenav-dot"></span><span class="sidenav-label">Technical Specs</span></a>
-        <ul class="sidenav-sub">
-          <li><a href="#ts-infrastructure" class="sidenav-link sidenav-child" data-section="ts-infrastructure"><span class="sidenav-dot"></span><span class="sidenav-label">Infrastructure</span></a></li>
-          <li><a href="#ts-interfaces" class="sidenav-link sidenav-child" data-section="ts-interfaces"><span class="sidenav-dot"></span><span class="sidenav-label">Interfaces</span></a></li>
-          <li><a href="#ts-security" class="sidenav-link sidenav-child" data-section="ts-security"><span class="sidenav-dot"></span><span class="sidenav-label">Security</span></a></li>
-          <li><a href="#ts-auth" class="sidenav-link sidenav-child" data-section="ts-auth"><span class="sidenav-dot"></span><span class="sidenav-label">Authentication</span></a></li>
-        </ul>
-      </li>
-      <li class="sidenav-group">
-        <a href="#architecture" class="sidenav-link sidenav-parent" data-section="architecture"><span class="sidenav-dot"></span><span class="sidenav-label">Architecture</span></a>
-      </li>
-      <li class="sidenav-group">
-        <a href="#resources" class="sidenav-link sidenav-parent" data-section="resources"><span class="sidenav-dot"></span><span class="sidenav-label">Resources</span></a>
-      </li>
-    </ul>
+  <!-- REEL NAV — DOM-based wheel -->
+  <nav class="reel-nav" id="reelNav" aria-label="Section navigation">
+    <div class="reel-housing"></div>
+    <div class="reel-track" id="reelTrack">
+      <!-- Items injected by JS -->
+    </div>
+    <div class="reel-notch"></div>
+    <div class="reel-readout" id="reelReadout">
+      <span class="reel-readout-section" id="reelLabelSection"></span>
+      <span class="reel-readout-title" id="reelLabelTitle"></span>
+      <span class="reel-readout-counter" id="reelCounter"></span>
+    </div>
+    <button class="reel-btn reel-btn-up" id="reelUp" aria-label="Previous section" type="button">&#9650;</button>
+    <button class="reel-btn reel-btn-down" id="reelDown" aria-label="Next section" type="button">&#9660;</button>
+    <div class="reel-hint" id="reelHint">Scroll or click to navigate</div>
   </nav>
 
   <!-- HERO -->
