@@ -43,22 +43,22 @@
     <span>⌘</span> Quick Nav <kbd>Ctrl K</kbd>
   </button>
 
-  <!-- REEL NAV — DOM-based wheel -->
-  <nav class="reel-nav" id="reelNav" aria-label="Section navigation">
-    <div class="reel-housing"></div>
-    <div class="reel-track" id="reelTrack">
-      <!-- Items injected by JS -->
-    </div>
-    <div class="reel-notch"></div>
-    <div class="reel-readout" id="reelReadout">
-      <span class="reel-readout-section" id="reelLabelSection"></span>
-      <span class="reel-readout-title" id="reelLabelTitle"></span>
-      <span class="reel-readout-counter" id="reelCounter"></span>
-    </div>
-    <button class="reel-btn reel-btn-up" id="reelUp" aria-label="Previous section" type="button">&#9650;</button>
-    <button class="reel-btn reel-btn-down" id="reelDown" aria-label="Next section" type="button">&#9660;</button>
-    <div class="reel-hint" id="reelHint">Scroll or click to navigate</div>
+  <!-- LEFT NAV — global section selector -->
+  <nav class="left-nav" id="leftNav" aria-label="Section navigation">
+    <div class="left-nav-housing"></div>
+    <button class="left-nav-arrow left-nav-up" id="sectionUp" aria-label="Previous section" type="button">&#9650;</button>
+    <div class="left-nav-sections" id="leftNavSections"></div>
+    <button class="left-nav-arrow left-nav-down" id="sectionDown" aria-label="Next section" type="button">&#9660;</button>
   </nav>
+
+  <!-- RIGHT NAV — contextual subsection navigator -->
+  <nav class="right-nav" id="rightNav" aria-label="Subsection navigation">
+    <div class="right-nav-header" id="rightNavHeader"></div>
+    <ul class="right-nav-items" id="rightNavItems"></ul>
+  </nav>
+
+  <!-- BACK TO TOP -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top" type="button">&#9650;</button>
 
   <!-- HERO -->
   <section class="hero parallax-section" id="hero" data-parallax="0.4">
@@ -75,22 +75,46 @@
       </div>
     </div>
     <div class="hero-visual">
-      <div class="hero-card">
-        <div class="hero-card-icon">⚕</div>
-        <div class="hero-card-stat" data-count="16" data-suffix="">0</div>
-        <div class="hero-card-label">Workflow Steps</div>
-      </div>
-      <div class="hero-card">
-        <div class="hero-card-icon">📋</div>
-        <div class="hero-card-stat" data-count="100" data-suffix="%">0%</div>
-        <div class="hero-card-label">Auto-Documentation</div>
-      </div>
-      <div class="hero-card">
-        <div class="hero-card-icon">🔒</div>
-        <div class="hero-card-stat">HL7</div>
-        <div class="hero-card-label">ADT Integration</div>
+      <div class="hero-guided-path" aria-hidden="true">
+        <svg viewBox="0 0 400 400" class="guided-svg">
+          <!-- Orbital track -->
+          <ellipse cx="200" cy="200" rx="150" ry="150" class="orbital-track" />
+          <!-- Sequential connection lines -->
+          <line x1="200" y1="50" x2="330" y2="120" class="seq-line seq-line-1" />
+          <line x1="330" y1="120" x2="330" y2="280" class="seq-line seq-line-2" />
+          <line x1="330" y1="280" x2="200" y2="350" class="seq-line seq-line-3" />
+          <line x1="200" y1="350" x2="70" y2="280" class="seq-line seq-line-4" />
+          <line x1="70" y1="280" x2="70" y2="120" class="seq-line seq-line-5" />
+          <line x1="70" y1="120" x2="200" y2="50" class="seq-line seq-line-6" />
+          <!-- Workflow nodes -->
+          <circle cx="200" cy="50" r="6" class="wf-node-dot node-1" />
+          <circle cx="330" cy="120" r="6" class="wf-node-dot node-2" />
+          <circle cx="330" cy="280" r="6" class="wf-node-dot node-3" />
+          <circle cx="200" cy="350" r="6" class="wf-node-dot node-4" />
+          <circle cx="70" cy="280" r="6" class="wf-node-dot node-5" />
+          <circle cx="70" cy="120" r="6" class="wf-node-dot node-6" />
+          <!-- Center core -->
+          <circle cx="200" cy="200" r="28" class="core-circle" />
+          <text x="200" y="196" class="core-label" text-anchor="middle" dominant-baseline="middle">Apex</text>
+          <text x="200" y="212" class="core-sublabel" text-anchor="middle" dominant-baseline="middle">Engine</text>
+          <!-- Traveling pulse -->
+          <circle r="4" class="traveling-pulse">
+            <animateMotion dur="8s" repeatCount="indefinite" keyPoints="0;0.167;0.333;0.5;0.667;0.833;1" keyTimes="0;0.167;0.333;0.5;0.667;0.833;1" calcMode="linear">
+              <mpath href="#guidedPath" />
+            </animateMotion>
+          </circle>
+          <path id="guidedPath" d="M200,50 L330,120 L330,280 L200,350 L70,280 L70,120 Z" fill="none" stroke="none" />
+          <!-- Node labels -->
+          <text x="200" y="32" class="node-label" text-anchor="middle">Admit</text>
+          <text x="352" y="120" class="node-label" text-anchor="start">Capture</text>
+          <text x="352" y="284" class="node-label" text-anchor="start">Document</text>
+          <text x="200" y="376" class="node-label" text-anchor="middle">Review</text>
+          <text x="48" y="284" class="node-label" text-anchor="end">Sign</text>
+          <text x="48" y="120" class="node-label" text-anchor="end">Distribute</text>
+        </svg>
       </div>
     </div>
+    <div class="hero-signature">Designed by Ezequiel Lopez</div>
   </section>
 
   <!-- OVERVIEW -->

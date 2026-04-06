@@ -137,173 +137,186 @@ function buildResources() {
 }
 
 
-// ===== REEL NAV =====
+// ===== SPLIT NAV — left (sections) + right (subsections) =====
 function initSideNav() {
-  const reelNav = document.getElementById('reelNav');
-  const track = document.getElementById('reelTrack');
-  const labelSection = document.getElementById('reelLabelSection');
-  const labelTitle = document.getElementById('reelLabelTitle');
-  const counterEl = document.getElementById('reelCounter');
-  const btnUp = document.getElementById('reelUp');
-  const btnDown = document.getElementById('reelDown');
-  const hint = document.getElementById('reelHint');
+  var leftNav = document.getElementById('leftNav');
+  var rightNav = document.getElementById('rightNav');
+  var rightHeader = document.getElementById('rightNavHeader');
+  var rightItems = document.getElementById('rightNavItems');
+  var leftSections = document.getElementById('leftNavSections');
+  var btnUp = document.getElementById('sectionUp');
+  var btnDown = document.getElementById('sectionDown');
 
-  const items = [
-    {id:'overview',label:'Overview',parent:null,isPrimary:true,group:0},
-    {id:'clinical-workflow',label:'Clinical Workflow',parent:null,isPrimary:true,group:1},
-    {id:'cw-admission',label:'Admission',parent:'clinical-workflow',group:1},
-    {id:'cw-scheduling',label:'Scheduling',parent:'clinical-workflow',group:1},
-    {id:'cw-orders',label:'Orders',parent:'clinical-workflow',group:1},
-    {id:'cw-charting',label:'Charting',parent:'clinical-workflow',group:1},
-    {id:'cw-physician-note',label:'Physician Note',parent:'clinical-workflow',group:1},
-    {id:'cw-charges',label:'Charges',parent:'clinical-workflow',group:1},
-    {id:'cw-transfer',label:'Transfer',parent:'clinical-workflow',group:1},
-    {id:'cw-discharge',label:'Discharge',parent:'clinical-workflow',group:1},
-    {id:'contacts',label:'Contacts',parent:null,isPrimary:true,group:2},
-    {id:'ct-departments',label:'Departments',parent:'contacts',group:2},
-    {id:'ct-leadership',label:'Leadership',parent:'contacts',group:2},
-    {id:'ct-powerusers',label:'Power Users',parent:'contacts',group:2},
-    {id:'ct-support',label:'Support',parent:'contacts',group:2},
-    {id:'functional-specs',label:'Functional Specs',parent:null,isPrimary:true,group:3},
-    {id:'fs-purpose',label:'Purpose',parent:'functional-specs',group:3},
-    {id:'fs-features',label:'Features',parent:'functional-specs',group:3},
-    {id:'fs-appworkflow',label:'App Workflow',parent:'functional-specs',group:3},
-    {id:'fs-testing',label:'Testing & SOPs',parent:'functional-specs',group:3},
-    {id:'technical-specs',label:'Technical Specs',parent:null,isPrimary:true,group:4},
-    {id:'ts-infrastructure',label:'Infrastructure',parent:'technical-specs',group:4},
-    {id:'ts-interfaces',label:'Interfaces',parent:'technical-specs',group:4},
-    {id:'ts-security',label:'Security',parent:'technical-specs',group:4},
-    {id:'ts-auth',label:'Authentication',parent:'technical-specs',group:4},
-    {id:'architecture',label:'Architecture',parent:null,isPrimary:true,group:5},
-    {id:'resources',label:'Resources',parent:null,isPrimary:true,group:6},
+  var NAV_MODEL = [
+    { id: 'clinical-workflow', label: 'Clinical Workflow', items: [
+      { id: 'cw-admission', label: 'Admission' },
+      { id: 'cw-scheduling', label: 'Scheduling' },
+      { id: 'cw-orders', label: 'Orders' },
+      { id: 'cw-charting', label: 'Charting' },
+      { id: 'cw-physician-note', label: 'Physician Note' },
+      { id: 'cw-charges', label: 'Charges' },
+      { id: 'cw-transfer', label: 'Transfer' },
+      { id: 'cw-discharge', label: 'Discharge' }
+    ]},
+    { id: 'contacts', label: 'Contacts', items: [
+      { id: 'ct-departments', label: 'Departments' },
+      { id: 'ct-leadership', label: 'Decision Makers' },
+      { id: 'ct-powerusers', label: 'Power Users' },
+      { id: 'ct-support', label: 'Support' }
+    ]},
+    { id: 'functional-specs', label: 'Functional Specs', items: [
+      { id: 'fs-purpose', label: 'Purpose' },
+      { id: 'fs-features', label: 'Features' },
+      { id: 'fs-appworkflow', label: 'App Workflow' },
+      { id: 'fs-testing', label: 'Testing & SOPs' }
+    ]},
+    { id: 'technical-specs', label: 'Technical Specs', items: [
+      { id: 'ts-infrastructure', label: 'Infrastructure' },
+      { id: 'ts-interfaces', label: 'Interfaces' },
+      { id: 'ts-security', label: 'Security' },
+      { id: 'ts-auth', label: 'Authentication' }
+    ]}
   ];
-  const N = items.length;
-  const ITEM_H = 20; // px per item in the vertical list
-  const VISIBLE = 11; // items visible at once (odd for center)
-  let aIdx = 0;
-  let isNav = false;
-  let firstInt = true;
-  const lightS = new Set(['overview','cw-admission','cw-orders','cw-physician-note','cw-transfer','ct-leadership','ct-powerusers','fs-purpose','fs-appworkflow','ts-infrastructure','ts-security','ts-auth','architecture','resources']);
 
-  // Build DOM items
-  const els = items.map((item, i) => {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'reel-item' + (item.isPrimary ? ' primary' : '');
-    wrapper.dataset.idx = i;
-    const inner = document.createElement('div');
-    inner.className = 'reel-item-inner';
-    inner.innerHTML = '<div class="reel-tick"></div><span class="reel-item-label">' + item.label + '</span>';
-    wrapper.appendChild(inner);
-    track.appendChild(wrapper);
-    // Click handler — real DOM click, always works
-    inner.addEventListener('click', () => goTo(i));
-    return wrapper;
+  var lightSections = new Set([
+    'cw-admission','cw-orders','cw-physician-note','cw-transfer',
+    'ct-departments','ct-powerusers',
+    'fs-purpose','fs-appworkflow',
+    'ts-infrastructure','ts-security','ts-auth'
+  ]);
+
+  var sectionIdx = 0;
+  var subIdx = -1; // active subsection (-1 = none)
+  var leftDots = [];
+
+  // ---- Build left nav dots ----
+  NAV_MODEL.forEach(function(sec, i) {
+    var dot = document.createElement('button');
+    dot.className = 'left-nav-item' + (i === 0 ? ' active' : '');
+    dot.setAttribute('data-label', sec.label);
+    dot.setAttribute('aria-label', sec.label);
+    dot.addEventListener('click', function() { goToSection(i); });
+    leftSections.appendChild(dot);
+    leftDots.push(dot);
   });
 
-  function layout() {
-    const centerY = 280; // half of 560
-    els.forEach((el, i) => {
-      const offset = i - aIdx;
-      const y = centerY + offset * ITEM_H;
-      const absOff = Math.abs(offset);
-      const halfVis = Math.floor(VISIBLE / 2);
-      el.style.position = 'absolute';
-      el.style.left = '14px';
-      el.style.top = y + 'px';
-      el.style.transition = 'top 0.35s cubic-bezier(0.16,1,0.3,1), opacity 0.3s';
-      // Visibility
-      el.classList.remove('visible', 'dimmed', 'active');
-      if (absOff <= halfVis) {
-        el.classList.add('visible');
-        if (absOff > halfVis - 2) el.classList.add('dimmed');
-      }
-      if (i === aIdx) el.classList.add('active');
+  // ---- Build right nav for current section ----
+  function buildRightNav() {
+    var sec = NAV_MODEL[sectionIdx];
+    rightHeader.textContent = sec.label;
+    rightItems.innerHTML = '';
+    sec.items.forEach(function(item, i) {
+      var li = document.createElement('li');
+      var a = document.createElement('a');
+      a.className = 'right-nav-link';
+      a.innerHTML = '<span class="right-nav-link-label">' + item.label + '</span>' +
+                    '<span class="right-nav-link-tick"></span>';
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        subIdx = i;
+        updateRightActive();
+        var target = document.getElementById(item.id);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      li.appendChild(a);
+      rightItems.appendChild(li);
+    });
+    subIdx = -1;
+    updateRightActive();
+  }
+
+  function updateRightActive() {
+    var links = rightItems.querySelectorAll('.right-nav-link');
+    links.forEach(function(link, i) {
+      link.classList.toggle('active', i === subIdx);
     });
   }
 
-  function updateReadout() {
-    const ac = items[aIdx];
-    const par = ac.parent ? items.find(x => x.id === ac.parent) : null;
-    const tt = ac.label;
-    if (labelTitle.textContent !== tt) {
-      labelSection.textContent = par ? par.label : '';
-      labelTitle.textContent = tt;
-      counterEl.textContent = (aIdx + 1) + ' / ' + N;
-      labelTitle.classList.remove('tick');
-      void labelTitle.offsetWidth;
-      labelTitle.classList.add('tick');
-    }
+  function updateLeftActive() {
+    leftDots.forEach(function(dot, i) {
+      dot.classList.toggle('active', i === sectionIdx);
+    });
   }
 
   function updateTheme() {
-    reelNav.classList.toggle('on-light', lightS.has(items[aIdx].id));
+    var sec = NAV_MODEL[sectionIdx];
+    var id = (subIdx >= 0 && sec.items[subIdx]) ? sec.items[subIdx].id : sec.id;
+    var isLight = lightSections.has(id);
+    leftNav.classList.toggle('on-light', isLight);
+    rightNav.classList.toggle('on-light', isLight);
   }
 
-  function goTo(idx, scroll) {
-    if (scroll === undefined) scroll = true;
-    idx = Math.max(0, Math.min(N - 1, idx));
-    if (idx === aIdx) return;
-    if (firstInt) { firstInt = false; hint.classList.add('hidden'); }
-    aIdx = idx;
-    layout();
-    updateReadout();
+  function goToSection(idx) {
+    if (idx < 0 || idx >= NAV_MODEL.length) return;
+    sectionIdx = idx;
+    updateLeftActive();
+    buildRightNav();
     updateTheme();
-    if (scroll) {
-      var t = document.getElementById(items[idx].id);
-      if (t) {
-        isNav = true;
-        if (document.startViewTransition) {
-          document.startViewTransition(function() { t.scrollIntoView({ behavior: 'instant', block: 'start' }); });
-        } else {
-          t.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-        setTimeout(function() { isNav = false; }, 800);
-      }
-    }
+    // Scroll to section landing
+    var target = document.getElementById(NAV_MODEL[idx].id);
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  // Scroll tracking
+  // ---- Scroll tracking — determines which section/subsection is visible ----
   function onScroll() {
-    if (isNav) return;
-    var b = 0, bd = Infinity;
-    items.forEach(function(it, i) {
-      var el = document.getElementById(it.id);
-      if (!el) return;
-      var d = Math.abs(el.getBoundingClientRect().top - window.innerHeight * 0.3);
-      if (d < bd) { bd = d; b = i; }
+    var bestSec = 0, bestSub = -1, bestDist = Infinity;
+    NAV_MODEL.forEach(function(sec, si) {
+      // Check section landing
+      var el = document.getElementById(sec.id);
+      if (el) {
+        var d = Math.abs(el.getBoundingClientRect().top - window.innerHeight * 0.3);
+        if (d < bestDist) { bestDist = d; bestSec = si; bestSub = -1; }
+      }
+      // Check subsections
+      sec.items.forEach(function(item, ii) {
+        var el2 = document.getElementById(item.id);
+        if (el2) {
+          var d2 = Math.abs(el2.getBoundingClientRect().top - window.innerHeight * 0.3);
+          if (d2 < bestDist) { bestDist = d2; bestSec = si; bestSub = ii; }
+        }
+      });
     });
-    if (b !== aIdx) {
-      aIdx = b;
-      layout();
-      updateReadout();
-      updateTheme();
+    if (bestSec !== sectionIdx) {
+      sectionIdx = bestSec;
+      updateLeftActive();
+      buildRightNav();
     }
+    if (bestSub !== subIdx) {
+      subIdx = bestSub;
+      updateRightActive();
+    }
+    updateTheme();
+
+    // Show/hide right nav based on whether we're in a doc section
+    var inDocSection = bestSub >= 0 || document.getElementById(NAV_MODEL[sectionIdx].id);
+    var secEl = document.getElementById(NAV_MODEL[sectionIdx].id);
+    var secVisible = secEl && secEl.getBoundingClientRect().top < window.innerHeight;
+    rightNav.classList.toggle('hidden', !secVisible);
   }
 
-  // Arrow buttons — real DOM, always work
-  btnUp.addEventListener('click', function(e) { e.stopPropagation(); goTo(aIdx - 1); });
-  btnDown.addEventListener('click', function(e) { e.stopPropagation(); goTo(aIdx + 1); });
-
-  // Mouse wheel on the nav area
-  reelNav.addEventListener('wheel', function(e) {
-    e.preventDefault();
-    goTo(aIdx + (e.deltaY > 0 ? 1 : -1));
-  }, { passive: false });
-
-  // Keyboard
-  document.addEventListener('keydown', function(e) {
-    if (document.getElementById('cmdOverlay').classList.contains('open')) return;
-    if (e.key === 'ArrowUp') { e.preventDefault(); goTo(aIdx - 1); }
-    if (e.key === 'ArrowDown') { e.preventDefault(); goTo(aIdx + 1); }
-  });
+  // ---- Arrow buttons ----
+  btnUp.addEventListener('click', function(e) { e.stopPropagation(); goToSection(sectionIdx - 1); });
+  btnDown.addEventListener('click', function(e) { e.stopPropagation(); goToSection(sectionIdx + 1); });
 
   window.addEventListener('scroll', onScroll, { passive: true });
 
-  // Init
-  layout();
-  updateReadout();
+  // ---- Init ----
+  buildRightNav();
+  updateLeftActive();
   updateTheme();
+  rightNav.classList.add('hidden');
   onScroll();
+}
+
+// ===== BACK TO TOP =====
+function initBackToTop() {
+  var btn = document.getElementById('backToTop');
+  window.addEventListener('scroll', function() {
+    btn.classList.toggle('visible', window.scrollY > 400);
+  }, { passive: true });
+  btn.addEventListener('click', function() {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 }
 
 
@@ -390,13 +403,20 @@ function initSmoothNav() {
 
 // ===== COMMAND PALETTE =====
 function initCommandPalette() {
-  const overlay = document.getElementById('cmdOverlay');
-  const input = document.getElementById('cmdInput');
-  const results = document.getElementById('cmdResults');
-  const trigger = document.getElementById('cmdTrigger');
-  const index = [
-    { icon: '🏥', label: 'Overview', section: 'Section', href: '#overview' },
-    { icon: '🔄', label: 'Interactive Workflow', section: 'Section', href: '#workflow' },
+  var overlay = document.getElementById('cmdOverlay');
+  var input = document.getElementById('cmdInput');
+  var results = document.getElementById('cmdResults');
+  var trigger = document.getElementById('cmdTrigger');
+
+  // Full hierarchy index — every section and subsection searchable
+  var index = [
+    // Top-level pages
+    { icon: '🏠', label: 'Hero / Home', section: 'Page', href: '#hero' },
+    { icon: '🏥', label: 'Overview', section: 'Page', href: '#overview' },
+    { icon: '🔄', label: 'Interactive Workflow', section: 'Page', href: '#workflow' },
+    { icon: '⚙️', label: 'System Architecture', section: 'Page', href: '#architecture' },
+    { icon: '📚', label: 'Resources & References', section: 'Page', href: '#resources' },
+    // Section 1 — Clinical Workflow
     { icon: '📋', label: 'Clinical Workflow Documentation', section: 'Section 1', href: '#clinical-workflow' },
     { icon: '🏥', label: 'Admission / Registration', section: 'Clinical Workflow', href: '#cw-admission' },
     { icon: '📅', label: 'Scheduling', section: 'Clinical Workflow', href: '#cw-scheduling' },
@@ -406,95 +426,126 @@ function initCommandPalette() {
     { icon: '💰', label: 'Charges', section: 'Clinical Workflow', href: '#cw-charges' },
     { icon: '🔄', label: 'Transfer', section: 'Clinical Workflow', href: '#cw-transfer' },
     { icon: '🚪', label: 'Discharge', section: 'Clinical Workflow', href: '#cw-discharge' },
+    // Section 2 — Contacts
     { icon: '👥', label: 'Contacts', section: 'Section 2', href: '#contacts' },
     { icon: '🏢', label: 'Departments & Locations', section: 'Contacts', href: '#ct-departments' },
     { icon: '👔', label: 'Decision Makers & Leadership', section: 'Contacts', href: '#ct-leadership' },
     { icon: '⚡', label: 'Power Users & Validation', section: 'Contacts', href: '#ct-powerusers' },
     { icon: '🛟', label: 'Support Tiers', section: 'Contacts', href: '#ct-support' },
+    // Section 3 — Functional Specs
     { icon: '⚙️', label: 'Functional Specifications', section: 'Section 3', href: '#functional-specs' },
     { icon: '🎯', label: 'Application Purpose', section: 'Functional Specs', href: '#fs-purpose' },
     { icon: '✨', label: 'Features', section: 'Functional Specs', href: '#fs-features' },
     { icon: '🔄', label: 'Application Workflow', section: 'Functional Specs', href: '#fs-appworkflow' },
     { icon: '🧪', label: 'Testing, SOPs & KBAs', section: 'Functional Specs', href: '#fs-testing' },
+    // Section 4 — Technical Specs
     { icon: '🖥️', label: 'Technical Specifications', section: 'Section 4', href: '#technical-specs' },
     { icon: '🖥️', label: 'Infrastructure & Servers', section: 'Technical Specs', href: '#ts-infrastructure' },
     { icon: '🔌', label: 'Interfaces & HL7', section: 'Technical Specs', href: '#ts-interfaces' },
     { icon: '🔒', label: 'Security & Network Config', section: 'Technical Specs', href: '#ts-security' },
     { icon: '🔑', label: 'Authentication — Azure AD', section: 'Technical Specs', href: '#ts-auth' },
-    { icon: '⚙️', label: 'System Architecture', section: 'Section', href: '#architecture' },
-    { icon: '📚', label: 'Resources & References', section: 'Section', href: '#resources' },
-    ...workflowSteps.map(s => ({ icon: s.icon, label: s.title, section: 'Workflow Step', href: '#workflow', stepId: s.id })),
-    ...resources.flatMap(cat => cat.items.map(item => ({ icon: '📄', label: item.name, section: cat.category, href: item.file, isFile: true }))),
+    // Workflow steps
+    ...workflowSteps.map(function(s) { return { icon: s.icon, label: s.title, section: 'Workflow Step', href: '#workflow', stepId: s.id }; }),
+    // Resources
+    ...resources.flatMap(function(cat) { return cat.items.map(function(item) { return { icon: '📄', label: item.name, section: cat.category, href: item.file, isFile: true }; }); }),
   ];
-  let selected = 0;
-  function open() { overlay.classList.add('open'); input.value = ''; input.focus(); render(''); }
-  function close() { overlay.classList.remove('open'); input.blur(); }
+
+  var selected = 0;
+  var isOpen = false;
+
+  function open() {
+    if (isOpen) return;
+    isOpen = true;
+    overlay.classList.add('open');
+    input.value = '';
+    // Delay focus slightly to ensure overlay is rendered
+    requestAnimationFrame(function() { input.focus(); });
+    render('');
+  }
+
+  function close() {
+    if (!isOpen) return;
+    isOpen = false;
+    overlay.classList.remove('open');
+    input.blur();
+  }
+
   function render(query) {
-    const q = query.toLowerCase().trim();
-    const filtered = q ? index.filter(item => item.label.toLowerCase().includes(q) || item.section.toLowerCase().includes(q)) : index.slice(0, 8);
+    var q = query.toLowerCase().trim();
+    var filtered = q
+      ? index.filter(function(item) { return item.label.toLowerCase().indexOf(q) !== -1 || item.section.toLowerCase().indexOf(q) !== -1; })
+      : index.slice(0, 10);
     selected = 0;
-    if (!filtered.length) { results.innerHTML = '<div class="cmd-empty">No results for "' + query + '"</div>'; return; }
-    results.innerHTML = filtered.slice(0, 10).map((item, i) =>
-      '<div class="cmd-result-item' + (i === 0 ? ' selected' : '') + '" data-idx="' + i + '" data-href="' + item.href + '" data-step="' + (item.stepId || '') + '">' +
-      '<span class="cmd-result-icon">' + item.icon + '</span><span class="cmd-result-label">' + item.label + '</span><span class="cmd-result-section">' + item.section + '</span></div>'
-    ).join('');
-    results.querySelectorAll('.cmd-result-item').forEach(el => {
-      el.addEventListener('mouseenter', () => { results.querySelectorAll('.cmd-result-item').forEach(e => e.classList.remove('selected')); el.classList.add('selected'); selected = parseInt(el.dataset.idx); });
-      el.addEventListener('click', () => navigate(el));
+    if (!filtered.length) {
+      results.innerHTML = '<div class="cmd-empty">No results for "' + query + '"</div>';
+      return;
+    }
+    results.innerHTML = filtered.slice(0, 12).map(function(item, i) {
+      return '<div class="cmd-result-item' + (i === 0 ? ' selected' : '') + '" data-idx="' + i + '" data-href="' + item.href + '" data-step="' + (item.stepId || '') + '">' +
+        '<span class="cmd-result-icon">' + item.icon + '</span><span class="cmd-result-label">' + item.label + '</span><span class="cmd-result-section">' + item.section + '</span></div>';
+    }).join('');
+    results.querySelectorAll('.cmd-result-item').forEach(function(el) {
+      el.addEventListener('mouseenter', function() {
+        results.querySelectorAll('.cmd-result-item').forEach(function(e) { e.classList.remove('selected'); });
+        el.classList.add('selected');
+        selected = parseInt(el.dataset.idx);
+      });
+      el.addEventListener('click', function() { navigate(el); });
     });
   }
+
   function navigate(el) {
-    const href = el.dataset.href, stepId = el.dataset.step; close();
+    var href = el.dataset.href;
+    var stepId = el.dataset.step;
+    close();
     if (href.startsWith('#')) {
-      const target = document.querySelector(href);
+      var target = document.querySelector(href);
       if (target) {
-        if (document.startViewTransition) { document.startViewTransition(() => { target.scrollIntoView({ behavior: 'instant', block: 'start' }); }); }
-        else { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
-        if (stepId) { setTimeout(() => { const s = document.querySelector('.wf-step[data-id="' + stepId + '"]'); if (s) s.click(); }, 600); }
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        if (stepId) {
+          setTimeout(function() {
+            var s = document.querySelector('.wf-step[data-id="' + stepId + '"]');
+            if (s) s.click();
+          }, 600);
+        }
       }
-    } else { window.location.href = href; }
+    } else {
+      window.location.href = href;
+    }
   }
-  input.addEventListener('input', () => render(input.value));
-  input.addEventListener('keydown', e => {
-    const items = results.querySelectorAll('.cmd-result-item');
+
+  input.addEventListener('input', function() { render(input.value); });
+
+  input.addEventListener('keydown', function(e) {
+    var items = results.querySelectorAll('.cmd-result-item');
     if (e.key === 'ArrowDown') { e.preventDefault(); selected = Math.min(selected + 1, items.length - 1); }
     else if (e.key === 'ArrowUp') { e.preventDefault(); selected = Math.max(selected - 1, 0); }
-    else if (e.key === 'Enter') { if (items[selected]) navigate(items[selected]); return; }
-    else if (e.key === 'Escape') { close(); return; }
-    items.forEach((el, i) => el.classList.toggle('selected', i === selected));
+    else if (e.key === 'Enter') { e.preventDefault(); if (items[selected]) navigate(items[selected]); return; }
+    else if (e.key === 'Escape') { e.preventDefault(); close(); return; }
+    else { return; }
+    items.forEach(function(el, i) { el.classList.toggle('selected', i === selected); });
     if (items[selected]) items[selected].scrollIntoView({ block: 'nearest' });
   });
-  overlay.addEventListener('click', e => { if (e.target === overlay) close(); });
-  trigger.addEventListener('click', open);
-  document.addEventListener('keydown', e => {
-    if ((e.ctrlKey || e.metaKey) && e.key === 'k') { e.preventDefault(); overlay.classList.contains('open') ? close() : open(); }
-    if (e.key === 'Escape' && overlay.classList.contains('open')) close();
-  });
-}
 
-// ===== ANIMATED COUNTER =====
-function animateCounter(el, target, suffix) {
-  suffix = suffix || '';
-  var start = 0, duration = 1200;
-  function step(ts) {
-    if (!start) start = ts;
-    var p = Math.min((ts - start) / duration, 1);
-    el.textContent = Math.floor((1 - Math.pow(1 - p, 3)) * target) + suffix;
-    if (p < 1) requestAnimationFrame(step);
-  }
-  requestAnimationFrame(step);
-}
-function initCounters() {
-  var obs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) {
-      if (e.isIntersecting) {
-        var el = e.target;
-        if (el.dataset.count) animateCounter(el, parseInt(el.dataset.count), el.dataset.suffix || '');
-        obs.unobserve(el);
-      }
-    });
-  }, { threshold: 0.5 });
-  document.querySelectorAll('[data-count]').forEach(function(el) { obs.observe(el); });
+  overlay.addEventListener('click', function(e) { if (e.target === overlay) close(); });
+  trigger.addEventListener('click', open);
+
+  // Ctrl+K / Cmd+K — top-priority handler, capture phase
+  document.addEventListener('keydown', function(e) {
+    // Ctrl+K or Cmd+K — always toggle command palette
+    if ((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) {
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+      if (isOpen) { close(); } else { open(); }
+      return;
+    }
+    // Escape closes if open
+    if (e.key === 'Escape' && isOpen) {
+      e.preventDefault();
+      close();
+    }
+  }, true); // capture phase — fires before any other keydown handlers
 }
 
 // ===== ARCH NODE INTERACTION =====
@@ -530,7 +581,7 @@ document.addEventListener('DOMContentLoaded', function() {
   initParallax();
   initSmoothNav();
   initCommandPalette();
-  initCounters();
+  initBackToTop();
   initWorkflowPulse();
   initArchInteraction();
 });
