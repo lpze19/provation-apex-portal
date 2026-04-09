@@ -6,6 +6,7 @@
   <title>Provation Apex | Clinical Workflow Portal — DHR Health</title>
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js" defer></script>
 </head>
 <body>
 
@@ -16,6 +17,14 @@
         <img src="https://www.dhrhealth.com/media/gwnhldr2/dhr-logo.png" alt="DHR Health" class="logo-img" />
         <span class="nav-divider"></span>
         <span class="nav-title">Provation Apex Portal</span>
+      </div>
+      <div class="nav-links">
+        <a href="#hero" class="nav-link active" data-section="hero"><span class="nav-link-pip"></span>Intro</a>
+        <a href="#overview" class="nav-link" data-section="overview"><span class="nav-link-pip"></span>Overview</a>
+        <a href="#workflow" class="nav-link" data-section="workflow"><span class="nav-link-pip"></span>Workflow</a>
+        <a href="#architecture" class="nav-link" data-section="architecture"><span class="nav-link-pip"></span>Architecture</a>
+        <a href="#clinical-workflow" class="nav-link" data-section="clinical-workflow"><span class="nav-link-pip"></span>Documentation</a>
+        <a href="#resources" class="nav-link" data-section="resources"><span class="nav-link-pip"></span>Resources</a>
       </div>
     </div>
   </nav>
@@ -65,55 +74,20 @@
     <div class="hero-bg-grid"></div>
     <div class="hero-orb hero-orb-1"></div>
     <div class="hero-orb hero-orb-2"></div>
-    <div class="hero-content">
-      <div class="hero-badge">Clinical Documentation System</div>
-      <h1 class="hero-title">Provation Apex<br /><span class="hero-accent">Clinical Workflow Portal</span></h1>
-      <p class="hero-sub">A comprehensive guide to the Provation Apex endoscopy documentation platform at DHR Health — from patient admission to final chart documentation.</p>
-      <div class="hero-actions">
-        <a href="#workflow" class="btn-primary">Explore Workflow</a>
-        <a href="#resources" class="btn-ghost">View Resources</a>
-      </div>
+
+    <div class="hero-lens-wrap">
+      <canvas id="apexCanvas" class="apex-canvas" aria-hidden="true"></canvas>
     </div>
-    <div class="hero-visual">
-      <div class="hero-guided-path" aria-hidden="true">
-        <svg viewBox="0 0 400 400" class="guided-svg">
-          <!-- Orbital track -->
-          <ellipse cx="200" cy="200" rx="150" ry="150" class="orbital-track" />
-          <!-- Sequential connection lines -->
-          <line x1="200" y1="50" x2="330" y2="120" class="seq-line seq-line-1" />
-          <line x1="330" y1="120" x2="330" y2="280" class="seq-line seq-line-2" />
-          <line x1="330" y1="280" x2="200" y2="350" class="seq-line seq-line-3" />
-          <line x1="200" y1="350" x2="70" y2="280" class="seq-line seq-line-4" />
-          <line x1="70" y1="280" x2="70" y2="120" class="seq-line seq-line-5" />
-          <line x1="70" y1="120" x2="200" y2="50" class="seq-line seq-line-6" />
-          <!-- Workflow nodes -->
-          <circle cx="200" cy="50" r="6" class="wf-node-dot node-1" />
-          <circle cx="330" cy="120" r="6" class="wf-node-dot node-2" />
-          <circle cx="330" cy="280" r="6" class="wf-node-dot node-3" />
-          <circle cx="200" cy="350" r="6" class="wf-node-dot node-4" />
-          <circle cx="70" cy="280" r="6" class="wf-node-dot node-5" />
-          <circle cx="70" cy="120" r="6" class="wf-node-dot node-6" />
-          <!-- Center core -->
-          <circle cx="200" cy="200" r="28" class="core-circle" />
-          <text x="200" y="196" class="core-label" text-anchor="middle" dominant-baseline="middle">Apex</text>
-          <text x="200" y="212" class="core-sublabel" text-anchor="middle" dominant-baseline="middle">Engine</text>
-          <!-- Traveling pulse -->
-          <circle r="4" class="traveling-pulse">
-            <animateMotion dur="8s" repeatCount="indefinite" keyPoints="0;0.167;0.333;0.5;0.667;0.833;1" keyTimes="0;0.167;0.333;0.5;0.667;0.833;1" calcMode="linear">
-              <mpath href="#guidedPath" />
-            </animateMotion>
-          </circle>
-          <path id="guidedPath" d="M200,50 L330,120 L330,280 L200,350 L70,280 L70,120 Z" fill="none" stroke="none" />
-          <!-- Node labels -->
-          <text x="200" y="32" class="node-label" text-anchor="middle">Admit</text>
-          <text x="352" y="120" class="node-label" text-anchor="start">Capture</text>
-          <text x="352" y="284" class="node-label" text-anchor="start">Document</text>
-          <text x="200" y="376" class="node-label" text-anchor="middle">Review</text>
-          <text x="48" y="284" class="node-label" text-anchor="end">Sign</text>
-          <text x="48" y="120" class="node-label" text-anchor="end">Distribute</text>
-        </svg>
-      </div>
+
+    <div class="hero-text" id="heroText">
+      <div class="hero-badge" id="heroBadge">Clinical Documentation System</div>
+      <h1 class="hero-title" id="heroTitle" aria-label="Provation Apex Clinical Workflow Portal">
+        <span class="hero-title-line" id="heroLine1"></span>
+        <span class="hero-title-line hero-accent" id="heroLine2"></span>
+      </h1>
+      <p class="hero-sub" id="heroSub">A comprehensive guide to the Provation Apex endoscopy documentation platform at DHR Health — from patient admission to final chart documentation.</p>
     </div>
+
     <div class="hero-signature">Designed by Ezequiel Lopez</div>
   </section>
 
